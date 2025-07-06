@@ -1,0 +1,24 @@
+{% extends 'Layout/Base/base.html' %}
+{% load product_tags %}
+{% load global_tags %}
+
+{% block title %}
+    سافیشنت - صفحه اصلی
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+    {% show_banner %}
+    {% show_home_products %}
+    {% show_about_product %}
+    {% show_count_down_banner %}
+    {% show_after_before_product %}
+    {% show_brands %}
+    {% show_testimonial %}
+    {% include 'Pages/Home/Components/SiteFeature/site_feature.html' %}
+    {% show_posts %}
+    {% show_instagram %}
+    {% products_modal %}
+{% endblock %}

@@ -1,0 +1,183 @@
+{% load humanize %}
+<div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+    <div class="shop__right__wraper">
+        <div class="shop__tab">
+            <ul class="nav " id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="shop__tap__link active" data-bs-toggle="tab" data-bs-target="#projects__one"
+                            type="button">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="shop__tap__link" data-bs-toggle="tab" data-bs-target="#projects__two" type="button">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="shop__selecte">
+            <form method="get" id="sortForm">
+                <select class="nice-select" name="SortBy" id="SortBy"
+                        onchange="document.getElementById('sortForm').submit();">
+                    <option value="manual" {% if request.GET.SortBy == "manual" %}selected{% endif %}>پیش فرض</option>
+
+                    <option value="title-ascending" {% if request.GET.SortBy == "title-ascending" %}selected{% endif %}>
+                        حروف الفبا، A-Z
+                    </option>
+                    <option value="title-descending"
+                            {% if request.GET.SortBy == "title-descending" %}selected{% endif %}>حروف الفبا، Z-A
+                    </option>
+                    <option value="price-ascending" {% if request.GET.SortBy == "price-ascending" %}selected{% endif %}>
+                        قیمت، کم به زیاد
+                    </option>
+                    <option value="price-descending"
+                            {% if request.GET.SortBy == "price-descending" %}selected{% endif %}>قیمت، زیاد به کم
+                    </option>
+                    <option value="created-descending"
+                            {% if request.GET.SortBy == "created-descending" %}selected{% endif %}>تاریخ، جدید به قدیم
+                    </option>
+                    <option value="created-ascending"
+                            {% if request.GET.SortBy == "created-ascending" %}selected{% endif %}>تاریخ، قدیم به جدید
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="shop__number text-right">
+            <span>
+                                        نمایش {{ page_obj.start_index }} - {{ page_obj.end_index }} از {{ page_obj.paginator.count }} نتیجه
+            </span>
+        </div>
+    </div>
+
+    <div class="tab-content " id="myTabContent">
+        <div class="tab-pane fade active show" id="projects__one" role="tabpanel" aria-labelledby="projects__one">
+            <div class="row grid__responsive">
+                {% for item in page_obj %}
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6">
+                        {% include 'product/Components/product_card.html' %}
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="projects__two" role="tabpanel" aria-labelledby="projects__two">
+            <div class="row">
+
+                {% for item in products %}
+                    <div class="col-xl-12">
+                        <div class="grid__wraper grid__list__wraper">
+
+                            <div class="grid__wraper__img__list__swatch">
+                                <div class="grid__wraper__img grid__wraper__img__list">
+                                    <div class="grid__wraper__img__inner">
+                                        <a href="">
+                                            {% if item.primary_image %}
+                                                <img class="primary__image" src="{{ item.primary_image.url }}"
+                                                     alt="Primary Image">
+                                            {% endif %}
+                                            {% if item.secondary_image %}
+                                                <img class="secondary__image" src="{{ item.secondary_image.url }}"
+                                                     alt="Secondary Image">
+                                            {% elif item.primary_image %}
+                                                <img class="secondary__image" src="{{ item.primary_image.url }}"
+                                                     alt="Secondary Image">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+
+
+                                    <div class="grid__wraper__badge">
+                                        {% if item.image_tag %}
+                                            <span class="new__badge">{{ item.image_tag }}</span>
+                                        {% endif %}
+                                        {% if item.discount %}
+                                            <span class="sale__badge">-{{ item.discount }}%</span>
+                                        {% endif %}
+
+                                    </div>
+
+                                    {% if item.offer_end_date > current_time %}
+                                        <div class="grid__wraper__countdown"
+                                             data-countdown="{{ item.offer_end_date|date:'Y/m/d' }}">
+                                            <div class="count">
+                                                <p>422</p><span>روزها</span>
+                                            </div>
+                                            <div class="count">
+                                                <p>23</p> <span>ساعت</span>
+                                            </div>
+                                            <div class="count">
+                                                <p>25</p> <span>دقیقه</span>
+                                            </div>
+                                            <div class="count">
+                                                <p>01</p> <span>ثانیه</span>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="grid__wraper__info grid__wraper__info__list text-start">
+                                <h3 class="grid__wraper__tittle">
+                                    <a href="" tabindex="0">{{ item.title }}</a>
+                                </h3>
+                                <div class="grid__wraper__price">
+                                    {% if item.old_price %}
+                                        <del>{{ item.old_price|intcomma:False }} ریال</del>
+                                    {% endif %}
+                                    <span>{{ item.current_price|intcomma:False }} ریال</span>
+                                </div>
+
+                                <div class="gird__list__description">
+                                    {{ item.short_description|safe }}
+                                </div>
+
+                                <div class="grid__wraper__icon grid__wraper__icon__list">
+                                    <ul>
+                                        <li>
+                                            <span data-bs-toggle="modal" data-bs-target="#exampleModal{{ item.id }}">
+                                                <a class="quick__view__action" href="#"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                                   title="نمایش سریع"
+                                                   data-bs-original-title="نمایش سریع">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                               title="افزودن به سبد خرید" data-bs-original-title="افزودن به سبد خرید">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                               title="افزودن به لیست آرزوها"
+                                               data-bs-original-title="افزودن به لیست آرزوها">
+                                                <i class="far fa-heart"></i>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'Layout/PageNavigation/page_navigations.html' %}
+
+
+</div>

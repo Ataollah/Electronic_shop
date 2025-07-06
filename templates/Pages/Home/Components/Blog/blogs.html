@@ -1,0 +1,52 @@
+{% load global_tags %}
+{% load jalali_tags %}
+{% if posts %}
+    <!-- blog__section__start -->
+    <div class="blog sp_bottom_50 sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section__title text-center">
+                        <h2>آخرین وبلاگ</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row row__custom__class blog__slider__active slider__default__arrow">
+                {% for item in posts %}
+                    <div class="col-xl-4 column__custom__class">
+                        <div class="blog__single__wrap">
+                            <div class="blog__img">
+                                <a href="{% url 'blog-detail-view' item.slug %}">
+                                    {% with media=item.media|get_media:"image" %}
+                                        {% if media %}
+                                            <img src="{{ media.file.url }}" alt="{{ item.title }}">
+                                        {% endif %}
+                                    {% endwith %}
+                                </a>
+                            </div>
+                            <div class="blog__meta">
+                                <ul>
+                                    <li class="blog__date"><i
+                                            class="far fa-calendar-alt"></i>{{ item.publishedAt|to_jalali:"%Y/%m/%d" }}
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="blog__title">
+                                <h2><a href="{% url 'blog-detail-view' item.slug %}" tabindex="0">{{ item.title|truncatechars:50 }}
+                                </a></h2>
+                            </div>
+
+                            <div class="blog__button">
+                                <a href="{% url 'blog-detail-view' item.slug %}" tabindex="0">ادامه مطلب</a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- blog__section__start -->
+{% endif %}
+

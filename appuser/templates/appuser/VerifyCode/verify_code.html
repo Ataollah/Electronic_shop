@@ -1,0 +1,164 @@
+{% extends 'Layout/Base/base.html' %}
+{% load static %}
+
+{% block meta %}
+{% endblock %}
+
+{% block title %}
+    تایید کد ارسالی
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>تایید کد ارسالی</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                تایید کد ارسالی
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- login__section__start -->
+    <div class="loginarea  sp_bottom_80 sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 mx-auto loginarea__col">
+                    <div class="loginarea__wraper">
+                        <div class="loginarea__heading">
+                            <h5 class="login__title">تایید کد ارسالی</h5>
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ username }}" name="username" id="username">
+                            <div class="text-danger">{{ form.verification_code.errors }}</div>
+                            <div id="show_error" class="text-danger">
+
+                            </div>
+                            <div class="loginarea__form">
+                                <div class="text-danger">{{ form.username.errors }}</div>
+                                <label class="form__label text-right">کد ارسالی</label>
+                                <input
+                                        class="common__login__input"
+                                        id="verification_code"
+                                        name="verification_code"
+                                        placeholder="کد دریافتی را وارد کنید"
+                                        type="text"
+                                        required
+                                        value="{{ form.data.verification_code }}"
+                                />
+                            </div>
+                            <div class="row">
+                                <div class=" col d-flex justify-content-between">
+                                    <div>
+                                        <div class="loginarea__button ">
+                                            <button id="btnSubmit" name="btnSubmit" type="submit"
+                                                    class="default__button">تایید
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="loginarea__button ">
+                                            <button
+                                                    type="button"
+                                                    name="btnSendCode"
+                                                    id="btnSendCode"
+                                                    class="default__button">
+                                                ارسال مجدد
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" d-flex justify-content-center align-items-center py-4 "
+                                 id="counter_message">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            const usernameInput = $('#username');
+            const verificationCodeInput = $('#verification_code');
+            const btnSendCode = $('#btnSendCode');
+            const btnSubmit = $('#btnSubmit');
+            const counterMessage = $('#counter_message');
+            const show_error = $('#show_error');
+
+            btnSendCode.prop('disabled', true);
+
+            function displayCounterMessage(counter) {
+
+                let interval = setInterval(function () {
+
+                    if (counter) {
+                        counterMessage.text('برای ارسال مجدد کد ' + counter + ' ثانیه منتظر بمانید');
+                        counter--;
+                    } else {
+                        counterMessage.text('');
+                        btnSendCode.prop('disabled', false);
+                        clearInterval(interval);
+                    }
+
+                }, 1000);
+            }
+
+            displayCounterMessage(120);
+
+            verificationCodeInput.on('keyup', function () {
+                verificationCodeInput.val(toEnglishNumber(verificationCodeInput.val()));
+            });
+
+
+            btnSendCode.on('click', function () {
+                let username = usernameInput.val();
+                if (isUsernameEmailOrPhone(username)) {
+                    $.ajax({
+                        url: "{% url 'send-code-api' %}",
+                        type: 'POST',
+                        data: {
+                            username: username
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            verificationCodeInput.prop('disabled', false);
+                            btnSendCode.prop('disabled', true);
+                            counterMessage.show();
+                            btnSubmit.prop('disabled', false);
+                            displayCounterMessage(3);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            let errorMessage = "نام کاربری قبلا گرفته شده یا نمی توان به سرور متصل شد";
+                            show_error.html(errorMessage);
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

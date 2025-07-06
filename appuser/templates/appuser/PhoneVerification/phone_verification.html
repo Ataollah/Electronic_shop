@@ -1,0 +1,95 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    شناسایی کاربر
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> شناسایی کاربر</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                 شناسایی کاربر
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- login__section__start -->
+    <div class="loginarea  sp_bottom_80 sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 mx-auto loginarea__col">
+                    <div class="loginarea__wraper">
+                        <div class="loginarea__heading">
+                            <h5 class="login__title">شماره تلفن</h5>
+                        </div>
+                        <form  method="post">
+                            {% csrf_token %}
+                            <div class="loginarea__form">
+                                <div class="text-danger">{{ form.username.errors }}</div>
+                                <label class="form__label text-right">شماره موبایل</label>
+                                <input name="username" id="username" class="common__login__input" type="text"
+                                     value="{{ form.data.username }}"  placeholder="شماره موبایل">
+                            </div>
+
+                            <div class="loginarea__button ">
+                                <button   id="btnSendCode" type="submit" class="default__button">ارسال</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+    <script>
+
+  $(document).ready(function () {
+    const usernameInput = $("#username");
+    const btnSendCode = $("#btnSendCode");
+    const show_error = $("#show_error");
+
+    if (usernameInput.val() === "") {
+      btnSendCode.prop("disabled", true);
+    } else {
+      btnSendCode.prop("disabled", false);
+    }
+
+    usernameInput.on("keyup", function () {
+      console.log("username");
+      console.log(usernameInput.val());
+      usernameInput.val(toEnglishNumber(usernameInput.val()));
+      let username = usernameInput.val();
+      if (isUsernameEmailOrPhone(username)) {
+        show_error.html("");
+        btnSendCode.prop("disabled", false);
+      } else {
+        btnSendCode.prop("disabled", true);
+      }
+    });
+
+
+  });
+</script>
+
+{% endblock %}

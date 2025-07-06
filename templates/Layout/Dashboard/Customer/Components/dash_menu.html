@@ -1,0 +1,55 @@
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+<div style="border: 2px solid #ccc; border-radius: 15px; padding: 20px; width: 300px;">
+    <div class="d-flex flex-column align-items-center">
+        <h5>داشبورد</h5>
+        <hr style="width:70%;">
+
+        <nav class="navbar  ">
+            <ul class="navbar-nav d-flex justify-content-center">
+                {% if user.isCustomer %}
+                    <!-- Links -->
+                    <li class="nav-item ">
+                        <div class="service__text">
+                            <h6><a class="{% if request.path == '/customer/order-history/' %}active-link{% endif %}"
+                                   href="{% url 'customer-order-history' %}">سفارشات</a></h6>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="service__text">
+                            <h6><a class="{% if request.path == '/customer/profile/' %}active-link{% endif %}"
+                                   href="{% url 'customer-profile' %}">پروفایل</a></h6>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="service__text">
+                            <h6><a class="{% if request.path == '/customer/change-password/' %}active-link{% endif %}"
+                                   href="{% url 'customer-change-password' %}">تغییر رمز</a></h6>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item ">
+                        <div class="service__text">
+                            <h6><a class="{% if '/cashier/order-by-status/' in request.path  %}active-link{% endif %}"
+                                   href="{% url 'cashier:order-by-status' 'all' %}">سفارشات</a></h6>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="service__text">
+                            <h6><a class="{% if request.path == '/cashier/change-password/' %}active-link{% endif %}"
+                                   href="{% url 'cashier:change-password' %}">تغییر رمز</a></h6>
+                        </div>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <div class="service__text">
+                        <h6><a href="{% url 'logout-view' %}">خروج</a></h6>
+                    </div>
+                </li>
+
+            </ul>
+
+        </nav>
+    </div>
+
+</div>

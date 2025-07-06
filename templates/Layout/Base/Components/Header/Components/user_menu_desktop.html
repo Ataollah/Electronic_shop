@@ -1,0 +1,75 @@
+<!-- setting__wrap__list__start -->
+<div class="setting__wrap__list">
+    <button class="setting__wrap__close">
+        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewbox="0 0 512 512">
+            <title>بستن</title>
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+                  d="M368 368L144 144M368 144L144 368"></path>
+        </svg>
+    </button>
+
+    {% if user.is_authenticated %}
+        {% if user.isCustomer %}
+            <div class="setting__wrap__heading">
+                <h6>
+                    <a href="{% url 'customer-dashboard' %}">داشبورد</a>
+                </h6>
+            </div>
+            <div class="setting__wrap__list__inner">
+                <ul>
+                    <li>
+                        <a href="{% url 'customer-order-history' %}">سفارشات</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'customer-profile' %}">پروفایل</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'customer-change-password' %}">تغییر رمز</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout-view' %}">خروج</a>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="setting__wrap__heading">
+                <h6>
+                    <a href="{% url 'cashier:dashboard' %}">داشبورد</a>
+                </h6>
+            </div>
+            <div class="setting__wrap__list__inner">
+                <ul>
+                    <li>
+                        <a href="{% url 'cashier:order-by-status' 'all' %}">سفارشات</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cashier:change-password' %}">تغییر رمز</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="setting__wrap__list__inner">
+                <ul>
+                    <li>
+                        <a href="{% url 'logout-view' %}">خروج</a>
+                    </li>
+
+                </ul>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="setting__wrap__list__inner">
+            <ul>
+                <li>
+                    <a href="{% url 'login-view' %}">ورود</a>
+                </li>
+                <li>
+                    <a href="{% url 'candid-phone-verification-view' %}">ثبت نام</a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+
+
+</div>
+<!-- setting__wrap__list__end -->

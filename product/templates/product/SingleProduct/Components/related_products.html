@@ -1,0 +1,28 @@
+{% if related_products %}
+    <!-- related__section__start -->
+    <div class="related__section sp_bottom_50">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section__title text-center">
+                        <h2>محصولات مرتبط</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row grid__responsive row__custom__class feature__slider__active slider__default__arrow">
+                {% for item in related_products %}
+                    <div class="col-xl-3 column__custom__class">
+                        {% include 'product/Components/product_card.html' %}
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+    <!-- related__section__start -->
+    {% with related_products as products %}
+        {% include 'Pages/Home/Components/ProductModal/product_modal.html' %}
+    {% endwith %}
+{% endif %}

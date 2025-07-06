@@ -1,0 +1,54 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    پرداخت نا موفق
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>پرداخت ناموفق</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                پرداخت  ناموفق
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- coll__section__start -->
+    <div class="coll__section sp_top_80">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                        <h3>عملیات پرداخت با شکست مواجه شد </h3>
+                        <h6>سفارش شماره <a href="{% url 'customer-order-history' %}">{{ request.session.order_id }}</a>
+                            پرداخت ناموفق دوباره تلاش کنید </h6>
+                        <a href="{% url 'customer-dashboard' %}">
+                            <span> داشبورد</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- coll__section__end -->
+
+
+{% endblock %}

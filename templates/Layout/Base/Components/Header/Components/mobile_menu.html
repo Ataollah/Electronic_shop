@@ -1,0 +1,76 @@
+<!-- Mobile Menu Start Here -->
+<div class="mobile-off-canvas-active">
+    <a class="mobile-aside-close"><i class="fa fa-close"></i></a>
+    <div class="header-mobile-aside-wrap">
+
+        <div class="mobile__logo">
+            <a href="{% url 'home' %}">
+                <img src="{{ siteInfo.logo_header.url }}" alt="Logo">
+            </a>
+        </div>
+
+        <div class="mobile-search">
+            <form class="search-form" action="#">
+                <input type="text" placeholder="جستجوی کل فروشگاه…">
+                <button class="button-search"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-menu-wrap">
+
+            <div class="mobile-navigation">
+
+                <nav>
+                    <ul class="mobile-menu">
+                        {% for item in menus %}
+
+                            {% if item.submenus.count %}
+                                <li class="menu-item-has-children">
+                                    <a href="{{ item.url }}"
+                                       class="{% if request.path == item.url %}active{% endif %}">
+                                        {{ item.name }}
+                                    </a>
+                                    <ul class="dropdown">
+                                        {% for submenu in item.submenus.all %}
+                                            <li>
+                                                <a href="{{ submenu.url }}">{{ submenu.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ item.url }}"
+                                       class="{% if request.path == item.url %}active{% endif %}">{{ item.name }} </a>
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </ul>
+                </nav>
+
+            </div>
+
+        </div>
+        <div class="mobile-curr-lang-wrap">
+
+
+            <div class="single-mobile-curr-lang">
+                <a class="mobile-account-active" href="#">حساب من <i class="fa fa-angle-down"></i></a>
+                {% include 'Layout/Base/Components/Header/Components/user_menu_mobile.html' %}
+            </div>
+        </div>
+
+        <div class="mobile-social-wrap">
+            {% for item in social_media %}
+
+                <a class="{{ item.type }}" href="{{ item.url }}" target="_blank">
+                    <i class="fab fa-{{ item.type }}"></i>
+                </a>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- Mobile Menu end Here -->

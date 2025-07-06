@@ -1,0 +1,37 @@
+{% load humanize %}
+{% if products %}
+    <!-- feature__section__start -->
+    <div class="feture__section  sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section__title text-center">
+                        <h2>محصولات پرطرفدار.</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row grid__responsive row__custom__class feature__slider__active slider__default__arrow">
+
+                {% for item in products %}
+                    <div class="col-xl-3 column__custom__class">
+                          {% include 'product/Components/product_card.html' %}
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+            <div class="col-xl-12">
+                <div class="feture__section__button text-center">
+                    <a class="default__button btn__pink" href="#">مشاهده همه</a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- feature__section__start -->
+{% endif %}

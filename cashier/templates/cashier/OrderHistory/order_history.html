@@ -1,0 +1,121 @@
+{% extends 'Layout/Dashboard/Customer/dashboard.html' %}
+{% load humanize %}
+{% load jalali_tags %}
+{% block title %}
+    سفارشات
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+
+{% block bread_crumb %}
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> لیست سفارشات</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">صفحه اصلی</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'cashier:dashboard' %}">داشبورد</a>
+                            </li>
+                            <li class="color__blue">سفارشات {{ persian_status }}</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+{% endblock %}
+
+
+{% block dash_main %}
+
+    <!-- End Page Title -->
+    {% if page_obj %}
+
+        <!-- cart__section__start -->
+        <div class="cartarea sp_bottom_100 ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cartarea__table__content table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>شماره سفارش</th>
+                                    <th>نام نام خانوادگی</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                    <th>مشاهده</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in page_obj %}
+                                    <tr>
+                                        <td>
+                                            {{ item.id }}
+                                        </td>
+
+                                        <td>
+                                            {{ item.user.get_full_name }}
+                                        </td>
+                                        <td>{{ item.created_at|to_jalali:"  %Y/%m/%d" }}</td>
+                                        <td>
+                                            {% if item.status == 'unpaid' %}
+                                                <span class="badge bg-warning">پرداخت نشده</span>
+                                            {% elif item.status == 'paid' %}
+                                                <span class="badge bg-success">پرداخت شده</span>
+                                            {% elif item.status == 'canceled' %}
+                                                <span class="badge bg-dark">انصراف داده شده</span>
+                                            {% elif item.status == 'pending' %}
+                                                <span class="badge bg-info">در حال پردازش</span>
+                                            {% elif item.status == 'delivered' %}
+                                                <span class="badge bg-success">تحویل داده شده</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'cashier:order-details' item.id %}">
+                                                <i class="bx bx-detail"></i>
+                                                <span>جزییات</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart__section__end-->
+
+        {% include 'Layout/PageNavigation/page_navigations.html' %}
+
+    {% else %}
+         <!-- coll__section__start -->
+    <div class="coll__section">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                        <h4>لیست سفارشات</h4>
+                        <h3>سفارشی در لیست وجود ندارد </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+{% endblock %}

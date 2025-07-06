@@ -1,0 +1,49 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    فروشگاه
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>فروشگاه</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                               فروشگاه
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+        <!-- shop__section__start-->
+        <div class="shop sp_top_80">
+            <div class="container">
+                <div class="row grid__responsive">
+                    {%  include 'product/Shop/Components/side_bar.html' %}
+                    {%  include 'product/Shop/Components/product_list.html' %}
+                    {% include 'Pages/Home/Components/ProductModal/product_modal.html' %}
+                </div>
+            </div>
+        </div>
+    <!-- shop__section__start-->
+
+    {% include 'product/Shop/Components/product_category.html' %}
+
+
+{% endblock %}

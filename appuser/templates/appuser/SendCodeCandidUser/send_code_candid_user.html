@@ -1,0 +1,191 @@
+{% extends 'Layout/Base/base.html' %}
+{% block search_engine %}
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="شوپه">
+{% endblock %}
+{% block page_title %}
+    تایید شماره تلفن
+{% endblock %}
+
+
+{% block main %} {% load static %}
+
+<!-- Page Title -->
+<div class="page-title-area page-title-img-one">
+  <div class="container">
+    <div class="page-title-item">
+      <h2>تایید شماره تلفن</h2>
+      <ul>
+        <li>
+          <a href="{% url 'home' %}">صفحه اصلی</a>
+        </li>
+        <li>
+          <i class="bx bx-chevron-left"></i>
+        </li>
+        <li>تایید شماره تلفن</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<!-- Checkout -->
+<section class="checkout-area ptb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="checkout-item">
+          <h2>تایید شماره تلفن</h2>
+          <div class="checkout-one">
+            <form method="post">
+              {% csrf_token %}
+              <div class="text-danger">{{ form.username.errors }}</div>
+              <div class="form-group">
+                <label for="username">شماره موبایل *</label>
+                <input
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  placeholder="شماره موبایل"
+                  type="text"
+                  value="{{ form.data.username }}"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="btnSendCode"></label>
+                <button
+                  type="submit"
+                  name="btnSendCode"
+                  id="btnSendCode"
+                  class="btn cmn-btn"
+                >
+                  ارسال
+                </button>
+              </div>
+              <div class="form-group">
+                <label></label>
+                <div id="counter_message_fa">
+                  برای ارسال مجدد کد {{ counter }} ثانیه منتظر بمانید
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="verification_code">کد تایید *</label>
+                <input
+                  class="form-control"
+                  placeholder="کد تایید"
+                  id="verification_code"
+                  name="verification_code"
+                  type="text"
+                />
+              </div>
+              <div class="form-group">
+                <div id="show_error" class="invalid-feedback d-block">
+                  {{ code_verification_error }}
+                </div>
+              </div>
+              <div class="text-danger">{{ form.verification_code.errors }}</div>
+              <div class="form-group">
+                <button
+                  type="submit"
+                  name="btnSubmit"
+                  id="btnSubmit"
+                  class="btn cmn-btn"
+                >
+                  تایید شماره تلفن
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Checkout -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    const usernameInput = $("#username");
+    const verificationCodeInput = $("#verification_code");
+    const btnSendCode = $("#btnSendCode");
+    const btnSubmit = $("#btnSubmit");
+    const counterMessageEn = $("#counter_message_en");
+    const counterMessageFa = $("#counter_message_fa");
+    const show_error = $("#show_error");
+
+    if (usernameInput.val() === "") {
+      btnSendCode.prop("disabled", true);
+    } else {
+      btnSendCode.prop("disabled", false);
+    }
+    // verificationCodeInput.prop('disabled', true);
+
+    // btnSubmit.prop('disabled', true);
+    counterMessageEn.hide();
+    counterMessageFa.hide();
+
+    usernameInput.on("keyup", function () {
+      console.log("username");
+      console.log(usernameInput.val());
+      usernameInput.val(toEnglishNumber(usernameInput.val()));
+      let username = usernameInput.val();
+      if (isUsernameEmailOrPhone(username)) {
+        show_error.html("");
+        btnSendCode.prop("disabled", false);
+      } else {
+        btnSendCode.prop("disabled", true);
+      }
+    });
+
+    verificationCodeInput.on("keyup", function () {
+      verificationCodeInput.val(toEnglishNumber(verificationCodeInput.val()));
+    });
+
+    btnSendCode.on("click", function () {
+      let username = usernameInput.val();
+      if (isUsernameEmailOrPhone(username)) {
+        $.ajax({
+          url: "{% url 'send-code-to-candid-api' %}",
+          type: "POST",
+          data: {
+            username: username,
+          },
+          success: function (data) {
+            console.log(data);
+            verificationCodeInput.prop("disabled", false);
+            btnSendCode.prop("disabled", true);
+            counterMessageEn.show();
+            counterMessageFa.show();
+            btnSubmit.prop("disabled", false);
+            let counter = 60;
+            let interval = setInterval(function () {
+              counter--;
+              if (counter === 0) {
+                clearInterval(interval);
+                counterMessageEn.hide();
+                counterMessageFa.hide();
+                btnSendCode.prop("disabled", false);
+              } else {
+                counterMessageFa.text(
+                  "برای ارسال مجدد کد " + counter + " ثانیه منتظر بمانید"
+                );
+              }
+            }, 1000);
+          },
+          error: function (error) {
+            console.log(error);
+            let errorMessage = error;
+            errorMessage =
+              "نام کاربری قبلا گرفته شده یا نمی توان به سرور متصل شد";
+            show_error.html(errorMessage);
+          },
+        });
+      }
+    });
+  });
+</script>
+
+{% endblock %}

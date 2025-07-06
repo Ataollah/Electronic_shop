@@ -1,0 +1,72 @@
+{% extends 'Layout/Base/base.html' %}
+
+
+{% block title %}
+         با ما تماس
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>تماس</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                تماس
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+
+    <!-- contact__section__start -->
+    <div class="contactarea sp_top_80 sp_bottom_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="contactarea__single">
+                        <h3>آدرس ایمیل</h3>
+                        <p>{{ siteInfo.email1 }} <br>{{ siteInfo.email2 }}</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="contactarea__single">
+                        <h3>شماره تلفن</h3>
+                        <p>{{ siteInfo.telephone1 }} <br>{{ siteInfo.telephone2 }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="contactarea__single">
+                        <h3>آدرس دفتر</h3>
+                        <p>{{ siteInfo.address }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- contact__section__end -->
+
+    {% include 'Pages/ContactUS/Components/contact_form.html' %}
+    {% include 'Pages/ContactUS/Components/map.html' %}
+
+
+{% endblock %}

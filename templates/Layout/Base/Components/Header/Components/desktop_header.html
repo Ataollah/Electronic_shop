@@ -1,0 +1,94 @@
+{% load cart_tags %}
+<div class="headerarea header__sticky headerarea__middle">
+    <div class="container desktop__menu__wrapper">
+        <div class="row common__row align-items-center">
+            <div class="col-xl-4 col-lg-4 col-md-6">
+                <div class="header__feature__item">
+                    <div class="header__feature__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewbox="0 0 512 512">
+                            <path d="M451 374c-15.88-16-54.34-39.35-73-48.76-24.3-12.24-26.3-13.24-45.4.95-12.74 9.47-21.21 17.93-36.12 14.75s-47.31-21.11-75.68-49.39-47.34-61.62-50.53-76.48 5.41-23.23 14.79-36c13.22-18 12.22-21 .92-45.3-8.81-18.9-32.84-57-48.9-72.8C119.9 44 119.9 47 108.83 51.6A160.15 160.15 0 0083 65.37C67 76 58.12 84.83 51.91 98.1s-9 44.38 23.07 102.64 54.57 88.05 101.14 134.49S258.5 406.64 310.85 436c64.76 36.27 89.6 29.2 102.91 23s22.18-15 32.83-31a159.09 159.09 0 0013.8-25.8C465 391.17 468 391.17 451 374z"
+                                  fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                        </svg>
+                    </div>
+                    <div class="header__feature__info">
+                        <h6>پشتیبانی دریافت کنید</h6>
+                        <p>{{ siteInfo.telephone1 }}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-4 col-lg-4 col-md-6 main_menu_wrap">
+                <div class="headerarea__logo">
+                    <a href="{% url 'home' %}"><img src="{{ siteInfo.logo_header.url }}" alt="Header Logo"></a>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-xl-4 col-lg-4 col-md-6">
+
+                <div class="headerarea__right">
+
+                    <ul class="headerarea__right__nav">
+
+                        <li>
+                            <div class="headerarea__search cursor__pointer">
+                                <svg role="presentation" stroke-width="2" focusable="false" width="22" height="22"
+                                     class="icon icon-search" viewbox="0 0 22 22">
+                                    <circle cx="11" cy="10" r="7" fill="none" stroke="currentColor"></circle>
+                                    <path d="m16 15 3 3" stroke="currentColor" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="setting__wrap cursor__pointer">
+                                <div class="setting__wrap__active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewbox="0 0 512 512">
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                              fill="none" stroke="currentColor" stroke-linecap="round"
+                                              stroke-linejoin="round" stroke-width="32"></path>
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z"
+                                              fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                              stroke-width="32"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="headermiddle__bar cursor__pointer">
+                                <div class="headermiddle__account">
+                                    <div class="headermiddle__account__img">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon"
+                                             viewbox="0 0 512 512">
+                                            <circle cx="176" cy="416" r="16" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="32"></circle>
+                                            <circle cx="400" cy="416" r="16" fill="none" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="32"></circle>
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                  stroke-linejoin="round" stroke-width="32"
+                                                  d="M48 80h64l48 272h256"></path>
+                                            <path d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128"
+                                                  fill="none" stroke="currentColor" stroke-linecap="round"
+                                                  stroke-linejoin="round" stroke-width="32"></path>
+                                        </svg>
+                                        <span class=" bigcounter">{% cartItemsCount %}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

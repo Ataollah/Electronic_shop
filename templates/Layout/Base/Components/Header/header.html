@@ -1,0 +1,12 @@
+{% load cart_tags %}
+<!-- header section start -->
+<header class="header__layout__4">
+    {% include 'Layout/Base/Components/Header/Components/desktop_header.html' %}
+    {% include 'Layout/Base/Components/Header/Components/desktop_menu.html' %}
+    {% include 'Layout/Base/Components/Header/Components/mobile_header.html' %}
+    {% include 'Layout/Base/Components/Header/Components/mobile_menu.html' %}
+    {% include 'Layout/Base/Components/Header/Components/user_menu_desktop.html' %}
+    {% include 'Layout/Base/Components/Header/Components/header_search.html' %}
+    {% mini_cart %}
+</header>
+<!-- header section end -->

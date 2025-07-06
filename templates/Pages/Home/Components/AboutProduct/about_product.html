@@ -1,0 +1,19 @@
+{% for item in about_products %}
+        <!-- شروع بخش درباره -->
+    <div class="about sp_top_80 sp_bottom_80">
+        <div class="container">
+            <div class="row align-items-center">
+
+                {% if item.direction == 'LTR' %}
+                    {% include 'Pages/Home/Components/AboutProduct/Components/image.html' %}
+                    {% include 'Pages/Home/Components/AboutProduct/Components/text.html' %}
+                {% else %}
+                    {% include 'Pages/Home/Components/AboutProduct/Components/text.html' %}
+                    {% include 'Pages/Home/Components/AboutProduct/Components/image.html' %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <!-- پایان بخش درباره -->
+{% endfor %}

@@ -1,0 +1,86 @@
+{% extends 'Layout/Base/base.html' %}
+{% load jalali_tags %}
+{% load global_tags %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>{{ post.title }}</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                <a href="{% url 'blog-view' %}">وبلاگ</a>
+                            </li>
+                            <li class="color__blue">
+                                {{ post.title }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- blog__section__start -->
+    <div class="blog sp_bottom_80 sp_top_80">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div class="ltn__blog-details-wrap--">
+                        {% with media=post.media|get_media:"image" %}
+                        {% if media %}
+                            <div class="ltn__page-details-inner ltn__blog-details-inner">
+                                <img class="img-fluid" src="{{ media.file.url }}" alt="{{ item.title }}">
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                        <h1 class="ltn__blog-title">{{ post.title }}</h1>
+                        <div class="ltn__blog-meta">
+                            <ul>
+                                <li class="ltn__blog-author">
+                                    <i class="far fa-user"></i>نویسنده:
+                                    {{ post.author.get_full_name }}
+                                </li>
+                                <li class="ltn__blog-date">
+                                    <i class="far fa-calendar-alt"></i>{{ post.publishedAt|to_jalali:"%Y/%m/%d" }}
+                                </li>
+                                {%  if post_comments.count %}
+                                <li>
+                                    <a href="#comments"><i class="fas fa-comment"></i>{{ post_comments.count }} نظر</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <p class="sp_top_20"></p>
+                        {{ post.content|safe }}
+                    </div>
+                    <hr>
+                    {% include 'blog/Detail/Components/tags.html' %}
+                    {% include 'blog/Detail/Components/comments.html' %}
+                    {% include 'blog/Detail/Components/comment_form.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog__section__end -->
+
+
+
+{% endblock %}

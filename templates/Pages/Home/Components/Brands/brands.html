@@ -1,0 +1,17 @@
+{% if brands %}
+    <!-- brant__section__start -->
+    <div class="brand sp_bottom_80  sp_top_80">
+        <div class="container">
+            <div class="brand__wraper brand__slider__active">
+                {% for item in brands %}
+                    <div class="brand__single">
+                        <div class="brand__img">
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- brant__section__end -->
+{% endif %}

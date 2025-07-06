@@ -1,0 +1,29 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block content %}
+
+    {% block bread_crumb %}
+
+    {% endblock %}
+
+    <!-- blog__section__start -->
+    <div class="blog sp_bottom_80 sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+                    {% include 'Layout/Dashboard/Customer/Components/dash_menu.html' %}
+                </div>
+
+                <div class="col-xl-9 col-lg-9 col-md-12 col-12">
+                    {% block dash_main %}
+
+                    {% endblock %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- blog__section__end -->
+
+{% endblock %}

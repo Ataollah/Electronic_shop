@@ -1,0 +1,154 @@
+{% extends 'Layout/Base/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    سبد خرید
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>سبد خرید</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                سبد خرید
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+{% if cart_items %}
+    <!-- cart__section__start -->
+    <div class="cartarea sp_bottom_100 sp_top_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+
+                        <div class="cartarea__table__content table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>تصویر</th>
+                                    <th>محصول</th>
+                                    <th>قیمت</th>
+                                    <th>تعداد</th>
+                                    <th>جمع کل</th>
+                                    <th>حذف</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in cart_items %}
+                                    <tr>
+                                        <td class="cartarea__product__thumbnail">
+                                            <a href="{% url 'product-detail-view' item.product.slug %}">
+                                                <img src="{{ item.product.primary_image.url }}"
+                                                     alt="{{ item.product.title }}">
+                                            </a>
+                                        </td>
+                                        <td class="cartarea__product__name"><a href="#">{{ item.product.title }}</a>
+                                        </td>
+                                        <td class="cartarea__product__price__cart"><span class="amount">{{ item.price|intcomma:False }} ریال</span>
+                                        </td>
+                                        <td class="cartarea__product__quantity">
+                                            <div class="featurearea__quantity">
+                                                {{ item.quantity }}
+
+                                            </div>
+                                        </td>
+                                        <td class="cartarea__product__subtotal">{{ item.get_total_price|intcomma:False }}ریال</td>
+                                        <td class="cartarea__product__remove">
+                                            <form  method="post" id="cartForm-{{ item.id }}"
+                                                  action="{% url 'cart-items' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="cart_item_id" value="{{ item.id }}">
+                                                <button type="submit" style="background:none; border:none; padding:0;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon"
+                                                         viewBox="0 0 512 512"><title>Trash</title>
+                                                        <path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320"
+                                                              fill="none" stroke="currentColor" stroke-linecap="round"
+                                                              stroke-linejoin="round" stroke-width="32"></path>
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                              stroke-miterlimit="10" stroke-width="32"
+                                                              d="M80 112h352"></path>
+                                                        <path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224"
+                                                              fill="none" stroke="currentColor" stroke-linecap="round"
+                                                              stroke-linejoin="round" stroke-width="32"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cartarea__shiping__update__wrapper">
+                        <div class="cartarea__shiping__update">
+                            <a class="default__button" href="{% url 'shop-view' %}">ادامه خرید</a>
+                        </div>
+                        <div class="cartarea__clear">
+                            <form action="{% url 'delete-all-items' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="default__button" href="#">حذف سبد خرید</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-4 col-md-6 col-12">
+                    <div class="cartarea__grand__totall cartarea__tax">
+                        <div class="cartarea__title">
+                            <h4>جمع کل سبد خرید</h4>
+                        </div>
+                        <h5>جمع کل سبد خرید
+                            <span>{{ total_price|intcomma:False }} ریال</span>
+                        </h5>
+                        <a class="default__button" href="{% url 'place-order' %}">ادامه به پرداخت</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- cart__section__end-->
+{% else %}
+<!-- coll__section__start -->
+    <div class="coll__section sp_top_80">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                        <h6>سبد خرید خالی می باشد</h6>
+                        <h3>شما می توانید با مراجعه به فروشگاه نسبت به خرید اقدام فرمایید</h3>
+                        <div class="button__wrapper">
+                            <a href="{% url 'shop-view' %}" class="default__button">فروشگاه</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- coll__section__end -->
+{% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'Layout/Dashboard/Customer/dashboard.html' %}
+{% load static %}
+{% block title %}
+    داشبورد
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+
+{% block bread_crumb %}
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> داشبورد مشتری</h1>
+                        <ul>
+                             <li>
+                                <a href="{% url 'home' %}">صفحه اصلی</a>
+                            </li>
+
+                            <li class="color__blue">
+                                داشبورد مشتری
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+{% endblock %}
+
+
+{% block dash_main %}
+
+        <!-- service__section__start -->
+            <div class="service ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="service__single">
+                                <div class="service__text">
+                                    <h3><a href="{% url 'customer-order-history' %}">سفارشات</a></h3>
+                                    <p>لیست آخرین سفارشات را می توانید در این قسمت مشاهده فرمایید</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="service__single">
+                                <div class="service__text">
+                                    <h3><a href="{% url 'customer-profile' %}">پروفایل</a></h3>
+                                    <p>اطلاعات پروفایل خود را می توانید در این قسمت مشاهده و ویرایش نمایید</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="service__single">
+                                <div class="service__text">
+                                    <h3><a href="{% url 'customer-change-password' %}">تغییر رمز</a></h3>
+                                    <p>در این قسمت می توانید رمز عبور خود را تغییر دهید</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <!-- service__section__end -->
+
+
+{% endblock %}

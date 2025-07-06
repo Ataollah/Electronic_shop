@@ -1,0 +1,59 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    وبلاگ
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> وبلاگ</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                وبلاگ
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- blog__section__start -->
+    <div class="blog sp_bottom_80 sp_top_80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+                    {% include 'blog/List/Components/SideBar/search.html' %}
+                    {% include 'blog/List/Components/SideBar/category.html' %}
+                    {% include 'blog/List/Components/SideBar/tags.html' %}
+                    {% include 'blog/List/Components/SideBar/recent_posts.html' %}
+                    {% include 'blog/List/Components/SideBar/social_media.html' %}
+                </div>
+
+                <div class="col-xl-9 col-lg-9 col-md-12 col-12">
+                     {% include 'blog/List/Components/PostList/post_list.html' %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- blog__section__end -->
+
+
+
+{% endblock %}

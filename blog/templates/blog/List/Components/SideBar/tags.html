@@ -1,0 +1,10 @@
+<div class="blog__sidebar">
+    <h4 class="blog__sidebar__title">برچسب ها</h4>
+    <div class="blog__tags">
+        <ul>
+            {% for item in tags %}
+              <li><a href="{% url 'blog-view' %}?tag={{ item.slug }}" class="">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

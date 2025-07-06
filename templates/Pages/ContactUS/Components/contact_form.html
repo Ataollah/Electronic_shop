@@ -1,0 +1,86 @@
+<!-- contactarea__form__area start -->
+
+<div class="contactarea__form sp_bottom_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+
+                <div class="contactarea__form__area">
+                    <h4 class="contactarea__form__title">ارسال پیام</h4>
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <form id="contact_form" action="{% url 'contact-us' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="contactarea__form__input">
+                                    <input type="text" placeholder="نام خود را وارد کنید" class="" name="name" required
+                                        value="{{ form.data.name }}"   id="name">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="contactarea__form__input">
+                                    <input type="email" style="text-align: right" placeholder="آدرس ایمیل را وارد کنید"
+                                           class="" name="email" required value="{{ form.data.email }}"
+                                           id="email">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="contactarea__form__input">
+                                    <input type="tel" style="text-align: right" placeholder="شماره تلفن را وارد کنید"
+                                           class="" name="phone" required value="{{ form.data.phone }}"
+                                           id="phone">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="contactarea__form__input">
+                                    <input type="text" value="{{ form.data.subject }}" placeholder="موضوع را وارد کنید" class="" name="subject" required
+                                           id="subject">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="contactarea__form__input">
+                                    <textarea placeholder="پیام را وارد کنید" class="custom-textarea" name="message"
+                                              required
+                                              id="message">{{ form.data.message }}</textarea>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="contactarea__form__button">
+                                    <button type="submit" value="submit" class="default__button" name="submit">ارسال
+                                    </button>
+                                    <p class="form-messege"></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contactarea__form__area end -->

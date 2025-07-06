@@ -1,0 +1,27 @@
+{% if gallery %}
+    <!-- instagram__start -->
+    <div class="instagram">
+        <div class="container">
+            <div class="row">
+                <div class="section__title text-center">
+                    <h2>در اینستاگرام دنبال کنید</h2>
+                    <p><a href="https://www.instagram.com/{{ siteInfo.instagram_id }}" target="_blank" title="https://www.instagram.com/">{{ siteInfo.instagram_id }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="instagram__img__wraper">
+            <div class="row row__custom__class instagram__slider__active slider__default__arrow slider__default__arrow slider__default__arrow--2">
+                {% for item in gallery %}
+                    <div class="col-sm-12 column__custom__class">
+                        <div class="instagram__img">
+                            <a class="popup__img" href="{{ item.image.url }}"> <img src="{{ item.image.url }}"
+                                                                                    alt="{{ item.title }}"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- instagram__end -->
+{% endif %}

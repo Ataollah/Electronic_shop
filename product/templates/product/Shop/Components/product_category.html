@@ -1,0 +1,22 @@
+<!-- شروع بخش دسته‌بندی -->
+<div class="category sp_bottom_70 sp_top_80">
+    <div class="container">
+        <div class="row grid__responsive row__custom__class category__slider__active slider__default__arrow">
+            {% for item in categories %}
+                <div class="col-12 column__custom__class">
+                    <div class="category__single">
+                        <div class="category__img">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="category__text">
+                            <h5><a href="{% url 'shop-view' %}?category={{ item.id }}" tabindex="-1">{{ item.title }}</a></h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- پایان بخش دسته‌بندی -->

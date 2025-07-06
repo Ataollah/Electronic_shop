@@ -1,0 +1,24 @@
+{% if testimonials %}
+    <!-- شروع بخش نظرات -->
+    <div class="testimonial testimonial__2 sp_bottom_100 sp_top_80">
+        <div class="container">
+            <div class="row testimonial__slider__active slider__default__arrow slider__default__dot">
+                {% for item in testimonials %}
+                    <div class="col-xl-12">
+                        <div class="testimonial__inner text-center">
+                            <div class="testimonial__img">
+                                <i class="fa fa-quote-right"></i>
+                            </div>
+
+                            <div class="testimonial__info">
+                                <p>{{ item.message|safe }}</p>
+                                <h4>{{ item.name }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- پایان بخش نظرات -->
+{% endif %}

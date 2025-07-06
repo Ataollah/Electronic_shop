@@ -1,0 +1,50 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    پرداخت سفارش
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>تسویه حساب</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                تسویه حساب
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+
+
+    <!-- checkout__section__start -->
+    <div class="checkoutarea sp_bottom_100 sp_top_100">
+        <div class="container">
+            <div class="row">
+                {% include 'order/CheckOut/Components/form.html' %}
+
+                {% include 'order/CheckOut/Components/order_info.html' %}
+
+            </div>
+        </div>
+    </div>
+    <!-- checkout__section__end-->
+
+
+{% endblock %}

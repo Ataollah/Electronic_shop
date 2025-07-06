@@ -1,0 +1,63 @@
+{% load humanize %}
+<div class="col-lg-6 col-md-12 col-12">
+    <div class="checkoutarea__payment__wraper">
+        <div class="checkoutarea__total">
+            <h3>سفارش شما</h3>
+
+            <div class="checkoutarea__table__wraper" style="overflow-x:auto;">
+                <table class="checkoutarea__table">
+                    <thead>
+                    <tr class="checkoutarea__item">
+                        <td class="checkoutarea__ctg__type"> محصول</td>
+                        <td class="checkoutarea__cgt__des"> مجموع</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order.items.all %}
+                        <tr class="checkoutarea__item prd-name">
+                            <td class="checkoutarea__ctg__type"> {{ item.product.title }} ×
+                                <span>{{ item.quantity }}</span></td>
+                            <td class="checkoutarea__cgt__des"> {{ item.price|intcomma:False }} ریال</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr class="checkoutarea__item">
+                        <td class="checkoutarea__item">حمل و نقل</td>
+                        <td class="checkoutarea__cgt__des ship-opt">
+
+                            <div class="checkoutarea__shipp">
+
+                                <label for="pay-toggle2">پس کرایه</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="checkoutarea__item">
+                        <td class="checkoutarea__itemcrt-total"> مجموع</td>
+                        <td class="checkoutarea__cgt__des prc-total"> {{ order.total_amount|intcomma:False }} ریال</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="checkoutarea__payment clearfix">
+            <div class="checkoutarea__payment__toggle">
+                <form action="{% url 'checkout' %}" method="post">
+                    {% csrf_token %}
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label for="description">یادداشت سفارش</label>
+                            <textarea type="text" id="description" name="description" class="form-control"
+                                      placeholder="یادداشت سفارش">
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="checkoutarea__payment__input__box">
+                        <button type="submit" class="default__button" >پرداخت سفارش</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

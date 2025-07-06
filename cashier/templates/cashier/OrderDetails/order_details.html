@@ -1,0 +1,187 @@
+{% extends 'Layout/Dashboard/Customer/dashboard.html' %}
+{% load humanize %}
+{% load jalali_tags %}
+{% block title %}
+    سفارشات
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+
+{% block bread_crumb %}
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> جزییات سفارش</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">صفحه اصلی</a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'cashier:dashboard' %}">داشبورد</a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'cashier:order-by-status' order.status %}">لیست سفارشات</a>
+                            </li>
+
+                            <li class="color__blue">سفارش شماره {{ order.id }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+{% endblock %}
+
+
+
+{% block dash_main %}
+
+    <div class="cartarea sp_bottom_100 ">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <table class="table py-5">
+                        <thead class="thead">
+                        <tr>
+                            <th class="table-head" colspan="4">
+                                اطلاعات مشتری
+                            </th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>شماره سفارش</td>
+                            <td>  {{ order.id }}</td>
+                            <td>مجموع خرید</td>
+                            <td><span>{{ order.total_amount|intcomma:False }} ریال</span></td>
+                        </tr>
+                        <tr>
+                            <td>موبایل</td>
+                            <td>{{ order.user.username }}</td>
+                            <td>نام نام خانوادگی</td>
+                            <td>{{ order.user.get_full_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                آدرس
+                            </td>
+                            <td colspan="3">
+                                {{ order.get_full_address|safe }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                توضیحات
+                            </td>
+                            <td colspan="3">
+                                {{ order.description }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <h4 class="py-5">لیست کالاهای سفارش داده شده</h4>
+                <div class="col-xl-12 ">
+                    <div class="cartarea__table__content table-responsive">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>ردیف</th>
+                                <th>محصول</th>
+                                <th>مبلغ</th>
+                                <th>تعداد</th>
+                                <th>مبلغ کل</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.items.all %}
+                                <tr>
+                                    <td>
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td>{{ item.product.title }}</td>
+                                    <td>{{ item.price|intcomma:False }}ریال</td>
+                                    <td>
+                                        {{ item.quantity }}
+                                    </td>
+                                    <td>{{ item.total_price|intcomma:False }}ریال</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% if payments %}
+                    <div class="col-xl-12 py-5">
+                        <h5>لیست پرداختی های سفارش</h5>
+                        <div class="cartarea__table__content table-responsive">
+                            <table class="py-5">
+                                <thead>
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th>مبلغ</th>
+                                    <th>شماره تراکنش</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in payments %}
+                                    <tr>
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td>{{ item.amount|intcomma:False }}ریال</td>
+                                        <td>{{ item.transaction_id }}</td>
+                                        <td>
+                                            {{ item.created_at|to_jalali:"%H:%M -  %Y/%m/%d" }}
+                                        </td>
+                                        <td>{{ item.get_status_persian }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <h4 class="py-5">تغییر وضعیت سفارش</h4>
+
+                <form action="{% url 'cashier:change-order-status' order.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="row py-1">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <select name="status" class="form-control" required>
+                                    <option value="" disabled selected> یکی از گزینه ها را انتخاب کنید</option>
+                                    <option value="pending">درحال انجام</option>
+                                    <option value="delivered">تحویل شده</option>
+                                    <option value="paid">جدید</option>
+                                    <option value="unpaid">پرداخت نشده</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value=" تغییر وضعیت" class="default__button">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

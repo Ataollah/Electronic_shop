@@ -1,0 +1,12 @@
+<div class="blog__sidebar">
+    <h4 class="blog__sidebar__title">هرگز اخبار را از دست ندهید</h4>
+    <div class="blog__social__icon">
+        <ul>
+            {% for item in social_media %}
+                <li><a target="_blank" title="{{ item.type }}-f" href="{{ item.url }}"><i
+                        class="fab fa-{{ item.type }}"></i></a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,450 @@
+{% extends 'Layout/Dashboard/Customer/dashboard.html' %}
+{% load humanize %}
+{% load jalali_tags %}
+{% block title %}
+    پروفایل کاربر
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+
+{% block bread_crumb %}
+    <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1>پروفایل کاربر</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">صفحه اصلی</a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'customer-dashboard' %}">داشبورد</a>
+                            </li>
+                            <li class="color__blue">پروفایل کاربر</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+{% endblock %}
+
+
+
+{% block page_title_area %}
+    <!-- Page Title -->
+    <div class="page-title-area page-title-img-two">
+        <div class="container">
+            <div class="page-title-item">
+                <h2>پروفایل کاربر</h2>
+                <ul>
+                    <li>
+                        <a href="{% url 'home' %}">صفحه اصلی</a>
+                    </li>
+                    <li>
+                        <i class='bx bx-chevron-left'></i>
+                    </li>
+                    <li>
+                        <a href="{% url 'customer-dashboard' %}">داشبورد</a>
+                    </li>
+                    <li>
+                        <i class='bx bx-chevron-left'></i>
+                    </li>
+                    <li>پروفایل کاربر</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+{% endblock %}
+
+{% block dash_main %}
+
+    <div class="loginarea ">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 mx-auto loginarea__col">
+                    <div class="loginarea__wraper">
+                        <div class="loginarea__heading">
+                            <h5 class="login__title">مشخصات فردی</h5>
+                        </div>
+                        <form method="post" enctype="multipart/form-data" autocomplete="off"
+                              action="{% url 'customer-profile' %}">
+                            {% csrf_token %}
+                            <div class="text-danger">
+                                {{ form.non_field_errors }}
+
+                            </div>
+
+                            <div class="loginarea__form">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="profile_picture">عکس پروفایل</label>
+                                        <input class="common__login__input" placeholder="حداکثر ۱۰۰ کیلو بایت"
+                                               name="profile_picture" id="profile_picture"
+                                               type="file" accept="image/*" onchange="previewProfileImage(event)">
+                                        <div class="text-danger">
+                                            {{ form.profile_picture.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div style="margin-top:10px; text-align:center;">
+                                            <img id="profile_image_preview" src="{% if form.initial.profile_picture %}{{ form.initial.profile_picture.url }}{% endif %}" alt="پیش‌نمایش عکس پروفایل"
+                                                 style=" width:100px; height:100px; object-fit:cover; border-radius:50%; border:2px solid #ccc;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loginarea__form">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>نام *</label>
+                                        <input class="common__login__input" name="first_name"
+                                               type="text"
+                                               value="{{ form.initial.first_name }}"
+                                               required placeholder="نام ">
+                                        <div class="text-danger">
+                                            {{ form.first_name.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>نام خانوادگی*</label>
+                                        <input class="common__login__input" autocomplete="off" name="last_name"
+                                               value="{{ form.initial.last_name }}"
+                                               type="text"
+                                               required placeholder="نام خانوادگی">
+                                        <div class="text-danger">
+                                            {{ form.last_name.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="loginarea__form">
+                                        <label>ایمیل </label>
+                                        <input class="common__login__input" name="email"
+                                               value="{{ form.initial.email }}"
+                                               type="email"
+                                               placeholder="ایمیل"
+                                               style="text-align: right; direction: rtl;">
+                                        <div class="text-danger">
+                                            {{ form.email.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="loginarea__form">
+                                        <label>شماره موبایل *</label>
+                                        <input class="common__login__input" name="username"
+                                               value="{{ form.initial.username }}"
+                                               type="text"
+                                               required readonly>
+                                        <div class="text-danger">
+                                            {{ form.username.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="loginarea__form">
+                                        <label>استان *</label>
+                                        <input type="text" class="common__login__input" readonly id="province"
+                                               name="province" value="{{ form.initial.province }}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="loginarea__form">
+                                        <label>شهرستان *</label>
+                                        <input type="text" id="county" name="county" class="common__login__input"
+                                               readonly
+                                               value="{{ form.initial.county }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="loginarea__form">
+                                        <label>منطقه *</label>
+                                        <input type="text" id="district" name="district" class="common__login__input"
+                                               readonly
+                                               value="{{ form.initial.district }}">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="loginarea__form">
+                                        <label>شهر *</label>
+                                        <input type="text" id="city" name="city" class="common__login__input" readonly
+                                               value="{{ form.initial.city }}">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="loginarea__form">
+                                        <label>روستا </label>
+                                        <input type="text" id="rural" name="rural" class="common__login__input" readonly
+                                               value="{{ form.initial.rural }}">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="loginarea__form">
+                                <label for="address">آدرس *</label>
+                                <input type="text" id="address" name="address" class="common__login__input" readonly
+                                       value="{{ form.initial.address }}">
+                            </div>
+                            <div class="loginarea__form">
+                                <label>کدپستی *</label>
+                                <input type="text" id="postal_code" name="postal_code" class="common__login__input"
+                                       readonly
+                                       value="{{ form.initial.postal_code }}">
+                            </div>
+
+
+                            <div class="loginarea__button ">
+                                <button type="button" class="default__button" id="change_address" data-bs-toggle="modal"
+                                        data-bs-target="#changeAddressModal">
+                                    تغییر آدرس
+                                </button>
+                                <button id="btnSendCode" type="submit" class="default__button">بروزرسانی اطلاعات پایه</button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="changeAddressModal" tabindex="-1" aria-labelledby="changeAddressModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeAddressModalLabel">تغییر آدرس </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Address form fields -->
+                    <div class="checkoutarea__billing__form">
+                        <form action="{% url 'customer-update-address' %}" id="changeAddressForm" method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="province-select">استان *</label>
+                                        <select name="province" id="province-select" class="form-control" required>
+                                            <option value="">انتخاب استان</option>
+                                            {% for province in provinces %}
+                                                <option value="{{ province.id }}">{{ province.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="text-danger">{{ form.province.errors }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="county-select">شهرستان *</label>
+                                        <select name="county" id="county-select" class="form-control" required>
+                                            <option value="">ابتدا استان را انتخاب کنید</option>
+                                        </select>
+                                        <div class="text-danger">{{ form.county.errors }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>منطقه *</label>
+                                        <select name="district" id="district-select" class="form-control" required>
+                                            <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                        </select>
+                                        <div class="text-danger">{{ form.district.errors }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>شهر *</label>
+                                        <select name="city" id="city-select" class="form-control" required>
+                                            <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                        </select>
+                                        <div class="text-danger">{{ form.city.errors }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>روستا </label>
+                                        <select name="rural" class="form-control" id="rural-select">
+                                            <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                        </select>
+                                        <div class="text-danger">{{ form.rural.errors }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="checkoutarea__inputbox">
+                                    <label for="address">آدرس *</label>
+                                    <input type="text" id="address" name="address" class="info" required>
+
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="checkoutarea__inputbox">
+                                    <label for="postal_code">کد پستی*</label>
+                                    <input type="text" id="postal_code" name="postal_code" class="info" required
+                                           pattern="\d{10}" maxlength="10" title=" ده رقمی وارد کنید عدد">
+                                </div>
+                            </div>
+                            <input type="hidden" name="province" id="province-name-input"/>
+                            <input type="hidden" name="county" id="county-name-input"/>
+                            <input type="hidden" name="city" id="city-name-input"/>
+                            <input type="hidden" name="district" id="district-name-input"/>
+                            <input type="hidden" name="rural" id="rural-name-input"/>
+                            <button type="submit" class="default__button">تغییر آدرس</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function setEnglishKeyboard() {
+            this.setAttribute('lang', 'en');
+        }
+
+        function previewProfileImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('profile_image_preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const provinceSelect = document.getElementById('province-select');
+            const countySelect = document.getElementById('county-select');
+            const citySelect = document.getElementById('city-select');
+            const districtSelect = document.getElementById('district-select');
+            const ruralSelect = document.getElementById('rural-select');
+            const provinceNameInput = document.getElementById('province-name-input');
+            const countyNameInput = document.getElementById('county-name-input');
+            const cityNameInput = document.getElementById('city-name-input');
+            const districtNameInput = document.getElementById('district-name-input');
+            const ruralNameInput = document.getElementById('rural-name-input');
+
+            provinceSelect.addEventListener('change', function () {
+                const provinceId = this.value;
+                // Set province name in hidden input
+                const selectedOption = this.options[this.selectedIndex];
+                if (provinceNameInput) {
+                    provinceNameInput.value = selectedOption.text;
+                }
+                countySelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+                fetch(`/iran/api/counties/?province_id=${provinceId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        countySelect.innerHTML = '<option value="">انتخاب شهرستان</option>';
+                        data.forEach(county => {
+                            countySelect.innerHTML += `<option value="${county.id}">${county.name}</option>`;
+                        });
+                        citySelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                        districtSelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                        ruralSelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                    });
+            });
+
+            countySelect.addEventListener('change', function () {
+                const countyId = this.value;
+                citySelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+                districtSelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+                ruralSelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+                fetch(`/iran/api/cities/?county_id=${countyId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        citySelect.innerHTML = '<option value="">انتخاب شهر</option>';
+                        data.forEach(city => {
+                            citySelect.innerHTML += `<option value="${city.id}">${city.name}</option>`;
+                        });
+                    });
+                fetch(`/iran/api/districts/?county_id=${countyId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        districtSelect.innerHTML = '<option value="">انتخاب منطقه</option>';
+                        data.forEach(district => {
+                            districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
+                        });
+                    });
+                fetch(`/iran/api/rurals/?county_id=${countyId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        ruralSelect.innerHTML = '<option value="">انتخاب روستا</option>';
+                        data.forEach(rural => {
+                            ruralSelect.innerHTML += `<option value="${rural.id}">${rural.name}</option>`;
+                        });
+                    });
+            });
+
+            // Update hidden inputs when selects change
+            countySelect.addEventListener('change', function () {
+                const countyId = this.value;
+                const selectedOption = this.options[this.selectedIndex];
+                if (countyNameInput) {
+                    countyNameInput.value = selectedOption.text;
+                }
+            });
+
+            citySelect.addEventListener('change', function () {
+                const cityId = this.value;
+                const selectedOption = this.options[this.selectedIndex];
+                if (cityNameInput) {
+                    cityNameInput.value = selectedOption.text;
+                }
+            });
+
+            districtSelect.addEventListener('change', function () {
+                const districtId = this.value;
+                const selectedOption = this.options[this.selectedIndex];
+                if (districtNameInput) {
+                    districtNameInput.value = selectedOption.text;
+                }
+            });
+
+            ruralSelect.addEventListener('change', function () {
+                const ruralId = this.value;
+                const selectedOption = this.options[this.selectedIndex];
+                if (ruralNameInput) {
+                    ruralNameInput.value = selectedOption.text;
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

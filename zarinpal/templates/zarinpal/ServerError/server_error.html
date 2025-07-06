@@ -1,0 +1,56 @@
+{% extends 'Layout/Base/base.html' %}
+{% block search_engine %}
+ <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="شوپه">
+
+{% endblock %}
+{% block page_title %}
+    اتصال نا موفق
+{% endblock %}
+
+{% block main %} {% load static %}
+
+    <!-- Page Title -->
+    <div class="page-title-area page-title-img-one">
+        <div class="container">
+            <div class="page-title-item">
+                <h2>اتصال ناموفق</h2>
+                <ul>
+                    <li>
+                        <a href="{% url 'home' %}">صفحه اصلی</a>
+                    </li>
+                    <li>
+                        <i class="bx bx-chevron-left"></i>
+                    </li>
+                    <li>ایراد در سرور زرین پال</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Checkout -->
+    <section class="checkout-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <div class="checkout-item">
+                        <h4>خطا</h4>
+                        <div class="checkout-one">
+                            <div class="content text-right">
+                                <h3 >امکان دسترسی به سرور زرین پال وجود ندارد دوباره تلاش کنید</h3>
+                                <h6 >سفارش شماره  <a href="{% url 'customer-order-history' %}">{{ request.session.order_id }}</a> پرداخت ناموفق دوباره تلاش کنید   </h6>
+                                 <a  href="{% url 'customer-dashboard' %}">
+                                    <span > داشبورد</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Checkout -->
+
+{% endblock %}

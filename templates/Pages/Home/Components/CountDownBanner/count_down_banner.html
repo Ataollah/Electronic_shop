@@ -1,0 +1,50 @@
+{% if item %}
+    <!-- شروع بنر شمارش معکوس -->
+    <div class="cowndown__banner cowndown__banner__4 sp_bottom_90 sp_top_90">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="cowndown__banner__inner">
+                        <h3>عجله کنید!</h3>
+                        <div class="cowndown__banner__title">
+                            <h2><strong>{{ item.title }}</strong></h2>
+                        </div>
+                        <p>{{ item.description }}</p>
+                        <div class="cowndown__banner__cowndown" data-countdown="{{ item.end_date|date:'Y/m/d ' }}">
+                            <div class="count">
+                                <p>28</p>
+                                <span>روزها</span>
+                            </div>
+                            <div class="count">
+                                <p>20</p>
+                                <span>ساعت‌ها</span>
+                            </div>
+
+                            <div class="count">
+                                <p>28</p>
+                                <span>دقیقه‌ها</span>
+                            </div>
+
+                            <div class="count">
+                                <p>28</p>
+                                <span>ثانیه‌ها</span>
+                            </div>
+                        </div>
+                        <div class="cowndown__banner__button">
+                        {% if item.product.slug %}
+                            <a class="default__button" href="{% url 'product-detail-view' item.product.slug %}">اکنون خرید کنید</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="coundown__img__4">
+            <img class="coundown__img__1" src="{{ item.image_left.url }}" alt="">
+            <img class="coundown__img__2" src="{{ item.image_right.url }}" alt="">
+        </div>
+    </div>
+    <!-- پایان بنر شمارش معکوس -->
+{% endif %}

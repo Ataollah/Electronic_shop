@@ -1,0 +1,18 @@
+{% load global_tags %}
+{% load jalali_tags %}
+<div class="blog__sidebar">
+    <h4 class="blog__sidebar__title">دسته بندی پست</h4>
+
+    <ul>
+        {% for item in post_categories %}
+            <li class="blog__sidebar__list">
+                <div class="blog__popular">
+                   <div class="blog__small__text">
+                        <h6><a href="{% url 'blog-view' %}?category={{ item.slug }}">{{ item.name }}</a></h6>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>

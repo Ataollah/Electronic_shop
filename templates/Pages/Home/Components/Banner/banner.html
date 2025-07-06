@@ -1,0 +1,38 @@
+<!-- herobanner__start -->
+{% if banners %}
+    <div class="herobanner herobanner__3" dir="ltr">
+
+        <div class="herobannerarea__slider  slider__default__arrow herobanner__arrow slider__default__dot herobanner__dot">
+            {% for item in banners %}
+                <div class="herobannerarea__slider__single position-relative">
+
+                    <div class="herobannerarea__slider__image">
+                        <img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.title }}">
+                    </div>
+
+                    <div class="herobanner__inner__3">
+                        <div class="herobanner__text__wraper herobanner__text__wraper--3 ltn__slide-animation">
+
+                            <h4 class="herobanner__small__title">{{ item.small_title }}</h4>
+                            <h1 class="herobanner__title animated"><strong>{{ item.big_title }}</strong></h1>
+                            <div class="herobanner__text animated">
+                                <p>{{ item.description }}</p>
+                            </div>
+
+                            <div class="herobanner__button  animated">
+                                 {% if  item.product.slug %}
+                                <a href="{% url 'product-detail-view' item.product.slug %}" class="default__button" tabindex="0">اکنون خرید کنید</a>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+{% endif %}
+<!-- herobanner__end -->

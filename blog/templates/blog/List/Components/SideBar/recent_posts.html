@@ -1,0 +1,33 @@
+{% load global_tags %}
+{% load jalali_tags %}
+<div class="blog__sidebar">
+    <h4 class="blog__sidebar__title">پست های اخیر</h4>
+
+    <ul>
+        {% for item in latest_posts %}
+            <li class="blog__sidebar__list">
+            <div class="blog__popular">
+                 {% with media=item.media|get_media:"image" %}
+                        {% if media %}
+                            <div class="blog__popular__img">
+                                <a href="{% url 'blog-detail-view' item.slug %}"> <img src="{{ media.file.url }}" alt="{{ item.title }}"></a>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                <div class="blog__small__text">
+                    <h6><a href="{% url 'blog-detail-view' item.slug %}">{{ item.title }}</a></h6>
+                    <div class="blog__small__meta">
+                        <ul>
+                            <li class="blog__small__date">
+                                <i class="far fa-calendar-alt"></i>{{ item.publishedAt|to_jalali:"%Y/%m/%d" }}
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>

@@ -1,0 +1,37 @@
+<!-- header__bottom__start -->
+<div class="header__bottom header__bottom__4 desktop__menu__wrapper">
+    <div class="container">
+        <div class="row common__row position-relative">
+            <div class="col-xl-12 main_menu_wrap">
+                <div class="headerarea__main__menu ">
+                    <nav>
+                        <ul>
+                            {% for item in menus %}
+                                <li>
+
+                                    {% if item.submenus.count %}
+                                        <a href="{{ item.url }}"
+                                           class="headerarea__has__dropdown {% if request.path|cut:'/' == item.url|cut:'/' %}active-link{% endif %}">
+                                            {{ item.name }}
+                                        </a>
+                                        <ul class="headerarea__submenu">
+                                            {% for submenu in item.submenus.all %}
+                                                <li>
+                                                    <a href="{{ submenu.url }}">{{ submenu.name }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <a href="{{ item.url }}"
+                                           class="{% if request.path|cut:'/' == item.url|cut:'/' %}active-link{% endif %}" >{{ item.name }} </a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header__bottom__end -->

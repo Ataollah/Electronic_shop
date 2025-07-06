@@ -1,0 +1,30 @@
+{% load jalali_tags %}
+{% load static %}
+
+{% if post_comments.count %}
+    <div class="ltn__comment-area sp_50" id="comments">
+        <h4 class="title-2">{{ post_comments.count }} نظر</h4>
+        <div>
+            {% for item in post_comments %}
+                <div class="row">
+                    <div class="ltn__comment-item clearfix">
+                        <div class="ltn__commenter-img">
+                            {% if item.user.profile_picture %}
+                                <img src="{{ item.user.profile_picture.url }}" alt="نظر">
+                            {% else %}
+                                <img src="{% static 'assets/img/no_profile.png' %}" alt="no profile picture">
+                            {% endif %}
+                        </div>
+                        <div class="ltn__commenter-comment">
+                            <h6>{{ item.user.get_full_name }}</h6>
+                            <span class="comment-date">{{ item.createdAt|to_jalali:"%Y/%m/%d" }}</span>
+                            <div>{{ item.comment }}</div>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background: #e0e0e0;height: 1px;border: none;margin: 16px 0">
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+

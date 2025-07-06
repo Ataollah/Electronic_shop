@@ -1,0 +1,22 @@
+  <!-- header__search -->
+    <div class="headersearch__active">
+        <div class="headersearch__active__icon">
+            <button class="headersearch__active__close">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewbox="0 0 512 512">
+                    <title>بستن</title>
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="32" d="M368 368L144 144M368 144L144 368"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="headersearch__active__input">
+            <form action="{% url 'shop-view' %}" method="get" role="search" style="position: relative;">
+                <div class="header__form__search">
+                    <input type="search" name="search" value="" placeholder=" جستجو کنید" class="input-text"
+                           autocomplete="off">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- header__search -->

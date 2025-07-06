@@ -1,0 +1,39 @@
+{% load jalali_tags %}
+{% load global_tags %}
+<div class="row">
+    {% for item in posts %}
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="blog__single__wrap">
+                 {% with media=item.media|get_media:"image" %}
+                        {% if media %}
+                            <div class="blog__img">
+                                <a href="{% url 'blog-detail-view' item.slug %}"> <img src="{{ media.file.url }}" alt="{{ item.title }}"></a>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                <div class="blog__meta">
+                    <ul>
+                        <li class="blog__date"><i class="far fa-calendar-alt"></i> {{ item.publishedAt|to_jalali:"%Y/%m/%d" }}</li>
+
+                    </ul>
+                </div>
+
+                <div class="blog__title">
+                    <h2><a href="{% url 'blog-detail-view' item.slug %}" tabindex="0">{{ item.title }}</a></h2>
+                </div>
+
+                <div class="blog__button">
+                    <a href="{% url 'blog-detail-view' item.slug %}" tabindex="0">ادامه مطلب</a>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <hr>
+
+    {% include 'Layout/PageNavigation/page_navigations.html' %}
+
+</div>

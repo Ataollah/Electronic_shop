@@ -1,0 +1,130 @@
+{% load static %}
+<!-- footer__section__start -->
+<div class="footer ">
+    <div class="footer__inner sp_top_80">
+        <div class="container sp_bottom_60">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="footer__widget">
+                        <h4 class="footer__title"><strong>درباره ما</strong></h4>
+                        <div class="footer__content">
+                            <p>{{ siteInfo.slogan }}
+                            </p>
+                        </div>
+                        <div class="footer__social__icon">
+                            <ul>
+                                {% for item in social_media %}
+                                    <li>
+                                        <a href="{{ item.url }}" title="{{ item.type }}" target="_blank">
+                                            <i class="fab fa-{{ item.type }}"></i>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="footer__widget">
+                        <div class="footer__middle text-center">
+                            <div class="footer__logo">
+                                <img src="{{ siteInfo.logo_footer.url }}" alt="لوگوی فوتر">
+                            </div>
+                            <div class="footer__address">
+                                <ul>
+                                    <li>
+                                        <div class="footer__address__info">
+                                            <p>{{ siteInfo.address }}</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="footer__address__info">
+                                            <p>{{ siteInfo.telephone2 }}</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="footer__address__info">
+                                            <p>{{ siteInfo.email2 }}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="footer__bottom">
+                                <h5>
+                                    تسویه حساب مطمئن تضمینی
+                                </h5>
+                                <div class="footer__img">
+                                    <ul>
+                                        <li style="height: 15px; width: 10px;">
+                                            <script src="https://www.zarinpal.com/webservice/TrustCode"
+                                                    type="text/javascript"></script>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="footer__widget">
+                        <h4 class="footer__title"><strong>خبرنامه</strong></h4>
+                        <div class="footer__text">
+                            <p>برای دریافت خبرنامه هفتگی ما و دریافت به‌روزرسانی‌ها از طریق ایمیل، مشترک شوید.</p>
+                        </div>
+                        <form action="{% url 'home' %}" method="post" class="footer__form">
+                            {% csrf_token %}
+
+                            <div class="footer__input footer__input__4">
+                                <input type="email" name="email" style="text-align: right"
+                                       value="{{ sub_form.data.email }}" placeholder="email@example.com">
+                                <button type="submit">اشتراک</button>
+                                <div class="text-danger">
+                                    {{ sub_form.email.errors }}
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="حق چاپ">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-12">
+                    <div class="حق چاپ__متن">
+                        <a href="{{ siteInfo.copyright_link }}">{{ siteInfo.copyright }}</a>
+
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-12">
+                    <div class="حق چاپ__منو">
+                        <ul>
+
+                            {% for item in links %}
+                                <li>
+                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- footer__section__end -->

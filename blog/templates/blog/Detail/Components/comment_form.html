@@ -1,0 +1,29 @@
+{% if user.is_authenticated %}
+<div class="contactarea__form__area__wrap sp_top_50">
+    <h4 class="contactarea__form__title">ارسال نظر</h4>
+    <div class="contactarea__form__area">
+        <div class="row">
+            <form method="post">
+                {% csrf_token %}
+                {% if message %}
+                    <div class="col-12">
+                        <label>{{ message }}</label>
+                    </div>
+                {% endif %}
+                <div class="col-12">
+                    <div class="contactarea__form__input">
+                    <textarea placeholder="پیام خود را وارد کنید" class="custom-textarea" name="comment"
+                              id="comment"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="contactarea__form__button">
+                        <button type="submit" class="default__button"> <i class="far fa-comments"></i> ارسال نظر</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}

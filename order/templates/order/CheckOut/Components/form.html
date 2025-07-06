@@ -1,0 +1,294 @@
+<div class="col-xl-6 col-lg-6 col-md-12">
+    <div class="checkoutarea__billing">
+        <div class="checkoutarea__billing__heading">
+            <h2>جزئیات صورتحساب</h2>
+        </div>
+        <div class="checkoutarea__billing__form">
+            <form action="#" method="post">
+                {% csrf_token %}
+
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="checkoutarea__inputbox">
+                            <label for="first_name">نام *</label>
+
+                            <input type="text" id="first_name" name="first_name" class="info" readonly
+                                   placeholder="نام" value="{{ order.user.first_name }}">
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="checkoutarea__inputbox">
+                            <label for="last_name">نام خانوادگی*</label>
+                            <input type="text" id="last_name" name="namm" class="info" readonly
+                                   value="{{ order.user.last_name }}">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="checkoutarea__inputbox">
+                            <label for="province">استان</label>
+                            <input type="text" id="province" name="province" class="info" value="{{ order.province }}">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="checkoutarea__inputbox">
+                            <label for="county">شهرستان</label>
+                            <input type="text" id="county" name="county" class="info" readonly
+                                   value="{{ order.county }}">
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="checkoutarea__inputbox">
+                            <label for="district">منطقه</label>
+                            <input type="text" id="district" name="district" class="info" readonly
+                                   value="{{ order.district }}">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="checkoutarea__inputbox">
+                            <label for="city">شهر</label>
+                            <input type="text" id="city" name="city" class="info" readonly value="{{ order.city }}">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="checkoutarea__inputbox">
+                            <label for="rural">روستا</label>
+                            <input type="text" id="rural" name="rural" class="info" readonly value="{{ order.rural }}">
+
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="checkoutarea__inputbox">
+                            <label for="address">آدرس *</label>
+                            <input type="text" id="address" name="address" class="info" readonly
+                                   value="{{ order.address }}">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="checkoutarea__inputbox">
+                            <label for="postal_code">کد پستی/زیپ کد*</label>
+                            <input type="text" id="postal_code" name="postal_code" class="info" readonly
+                                   value="{{ order.postal_code }}">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="default__button" id="change_address" data-bs-toggle="modal"
+                        data-bs-target="#changeAddressModal">
+                    تغییر آدرس سفارش
+                </button>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Change Address Button -->
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="changeAddressModal" tabindex="-1" aria-labelledby="changeAddressModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeAddressModalLabel">تغییر آدرس سفارش</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Address form fields -->
+                <div class="checkoutarea__billing__form">
+                    <form action="{% url 'update-order-address' %}" id="changeAddressForm" method="post">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label for="province-select">استان *</label>
+                                    <select name="province" id="province-select" class="form-control" required>
+                                        <option value="">انتخاب استان</option>
+                                        {% for province in provinces %}
+                                            <option value="{{ province.id }}">{{ province.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="text-danger">{{ form.province.errors }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label for="county-select">شهرستان *</label>
+                                    <select name="county" id="county-select" class="form-control" required>
+                                        <option value="">ابتدا استان را انتخاب کنید</option>
+                                    </select>
+                                    <div class="text-danger">{{ form.county.errors }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>منطقه *</label>
+                                    <select name="district" id="district-select" class="form-control" required>
+                                        <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                    </select>
+                                    <div class="text-danger">{{ form.district.errors }}</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>شهر *</label>
+                                    <select name="city" id="city-select" class="form-control" required>
+                                        <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                    </select>
+                                    <div class="text-danger">{{ form.city.errors }}</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>روستا </label>
+                                    <select name="rural" class="form-control" id="rural-select">
+                                        <option value="">ابتدا شهرستان را انتخاب کنید</option>
+                                    </select>
+                                    <div class="text-danger">{{ form.rural.errors }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="checkoutarea__inputbox">
+                                <label for="address">آدرس *</label>
+                                <input type="text" id="address" name="address" class="info" required>
+
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="checkoutarea__inputbox">
+                                <label for="postal_code">کد پستی*</label>
+                                <input type="text" id="postal_code" name="postal_code" class="info" required
+                                       pattern="\d{10}" maxlength="10" title=" ده رقمی وارد کنید عدد">
+                            </div>
+                        </div>
+                        <input type="hidden" name="province" id="province-name-input"/>
+                        <input type="hidden" name="county" id="county-name-input"/>
+                        <input type="hidden" name="city" id="city-name-input"/>
+                        <input type="hidden" name="district" id="district-name-input"/>
+                        <input type="hidden" name="rural" id="rural-name-input"/>
+                        <button type="submit" class="default__button">تغییر آدرس</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const provinceSelect = document.getElementById('province-select');
+        const countySelect = document.getElementById('county-select');
+        const citySelect = document.getElementById('city-select');
+        const districtSelect = document.getElementById('district-select');
+        const ruralSelect = document.getElementById('rural-select');
+        const provinceNameInput = document.getElementById('province-name-input');
+        const countyNameInput = document.getElementById('county-name-input');
+        const cityNameInput = document.getElementById('city-name-input');
+        const districtNameInput = document.getElementById('district-name-input');
+        const ruralNameInput = document.getElementById('rural-name-input');
+
+
+        provinceSelect.addEventListener('change', function () {
+
+            const provinceId = this.value;
+            // Set province name in hidden input
+            const selectedOption = this.options[this.selectedIndex];
+            if (provinceNameInput) {
+                provinceNameInput.value = selectedOption.text;
+            }
+            countySelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+            fetch(`/iran/api/counties/?province_id=${provinceId}`)
+                .then(res => res.json())
+                .then(data => {
+                    countySelect.innerHTML = '<option value="">انتخاب شهرستان</option>';
+                    data.forEach(county => {
+                        countySelect.innerHTML += `<option value="${county.id}">${county.name}</option>`;
+                    });
+                    citySelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                    districtSelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                    ruralSelect.innerHTML = '<option value="">ابتدا شهرستان را انتخاب کنید</option>';
+                });
+        });
+
+        countySelect.addEventListener('change', function () {
+            const countyId = this.value;
+            citySelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+            districtSelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+            ruralSelect.innerHTML = '<option value="">در حال بارگذاری...</option>';
+            fetch(`/iran/api/cities/?county_id=${countyId}`)
+                .then(res => res.json())
+                .then(data => {
+                    citySelect.innerHTML = '<option value="">انتخاب شهر</option>';
+                    data.forEach(city => {
+                        citySelect.innerHTML += `<option value="${city.id}">${city.name}</option>`;
+                    });
+                });
+            fetch(`/iran/api/districts/?county_id=${countyId}`)
+                .then(res => res.json())
+                .then(data => {
+                    districtSelect.innerHTML = '<option value="">انتخاب منطقه</option>';
+                    data.forEach(district => {
+                        districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
+                    });
+                });
+            fetch(`/iran/api/rurals/?county_id=${countyId}`)
+                .then(res => res.json())
+                .then(data => {
+                    ruralSelect.innerHTML = '<option value="">انتخاب روستا</option>';
+                    data.forEach(rural => {
+                        ruralSelect.innerHTML += `<option value="${rural.id}">${rural.name}</option>`;
+                    });
+                });
+        });
+
+        // Update hidden inputs when selects change
+        countySelect.addEventListener('change', function () {
+            const countyId = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            if (countyNameInput) {
+                countyNameInput.value = selectedOption.text;
+            }
+        });
+
+        citySelect.addEventListener('change', function () {
+            const cityId = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            if (cityNameInput) {
+                cityNameInput.value = selectedOption.text;
+            }
+        });
+
+        districtSelect.addEventListener('change', function () {
+            const districtId = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            if (districtNameInput) {
+                districtNameInput.value = selectedOption.text;
+            }
+        });
+
+        ruralSelect.addEventListener('change', function () {
+            const ruralId = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            if (ruralNameInput) {
+                ruralNameInput.value = selectedOption.text;
+            }
+        });
+    });
+</script>

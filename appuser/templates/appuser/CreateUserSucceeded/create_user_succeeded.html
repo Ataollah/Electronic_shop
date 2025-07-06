@@ -1,0 +1,53 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    ثبت نام موفق
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+     <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> ثبت نام کاربر</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                ثبت نام کاربر
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- coll__section__start -->
+    <div class="coll__section sp_top_80">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                       <h3>ثبت کاربر جدید  پایان رسید </h3>
+                                <h6>برای ورود با پروفایل کاربر ایجاد شده برروی دکمه ورود کلیک کنید </h6>
+                                <a  href="{% url 'login-view' %}" class="default__button">
+                                    <span >ورود کاربر</span>
+                                </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- coll__section__end -->
+
+{% endblock %}
