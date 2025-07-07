@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.sites.models import Site
 from eshop.custom_admin import custom_admin_site
-from siteInfo.models import Menu, SMSProvider, SubMenu, SiteInfo, SocialMedia, Links, FAQ, Gallery, Testimonial
+from siteInfo.models import Menu, SMSProvider, SubMenu, SiteInfo, SocialMedia, Links, FAQ, Gallery, Testimonial, \
+    MailProvider
 
 
 # Register your models here.
@@ -55,6 +56,11 @@ class SMSProviderAdmin(admin.ModelAdmin):
     ordering = ('name',)
     search_fields = ('name', 'api_key', 'api_secret')
 
+class MailProviderAdmin(admin.ModelAdmin):
+    model = MailProvider
+    list_display = ('name',)
+    ordering = ('name',)
+
 class TestimonialAdmin(admin.ModelAdmin):
     model = Testimonial
     list_display = ('name', 'message')
@@ -70,4 +76,5 @@ custom_admin_site.register(FAQ, FAQAdmin)
 custom_admin_site.register(Gallery, GalleryAdmin)
 custom_admin_site.register(SMSProvider, SMSProviderAdmin)
 custom_admin_site.register(Testimonial, TestimonialAdmin)
+custom_admin_site.register(MailProvider, MailProviderAdmin)
 custom_admin_site.register(Site)

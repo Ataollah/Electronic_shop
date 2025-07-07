@@ -1,5 +1,5 @@
 """
-URL configuration for eshop project.
+URL configuration for sufficient project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -15,12 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-
 from django.contrib import admin
 from django.urls import path,include
+from blog.BlogSitemap import BlogSiteMap
+from product.ProductSitemap import ProductSitemap
 from siteInfo.views import HomeView
 from eshop import settings
 from eshop.custom_admin import custom_admin_site
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import StaticViewSitemap
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "blog":BlogSiteMap,
+    "product":ProductSitemap,
+}
 
 
 urlpatterns = [
@@ -38,6 +47,7 @@ urlpatterns = [
     path('cashier/', include('cashier.urls')),
     path('newsletter/',include('newsletter.urls')),
     path('zarinpal/', include('zarinpal.urls')),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap", )
 
 ]
 

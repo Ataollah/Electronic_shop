@@ -1,5 +1,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
+from django.urls import reverse
+
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
@@ -50,6 +52,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('product-detail-view', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         update_file_field(Product, self.id, 'primary_image', self.primary_image)

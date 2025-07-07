@@ -1,3 +1,4 @@
+import jdatetime
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.conf import settings
@@ -34,6 +35,14 @@ class Order(models.Model):
         print('persian status : ',order_dict['delivered'])
         return order_dict.get(self.status)
     get_persian_status.short_description = 'وضعیت سفارش فارسی'
+
+    def getPersianCreatedAt(self):
+        if self.created_at:
+            jalali_date = jdatetime.datetime.fromgregorian(datetime=self.created_at)
+            return jalali_date.strftime('%Y/%m/%d %H:%M')
+        return ''
+
+    getPersianCreatedAt.short_description = 'زمان ایجاد (شمسی)'
 
     def get_full_address(self):
         return f"استان : {self.province} - شهرستان : {self.county} - منطقه : {self.district} - شهر :  {self.city} - روستا : {self.rural} <br>  خیابان : {self.address} <br> کدپستی :  {self.postal_code}"

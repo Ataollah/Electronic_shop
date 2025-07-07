@@ -1,3 +1,4 @@
+import jdatetime
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 
@@ -10,6 +11,14 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+    def getPersianSubscribedAt(self):
+        if self.subscribed_at:
+            jalali_date = jdatetime.datetime.fromgregorian(datetime=self.subscribed_at)
+            return jalali_date.strftime('%Y/%m/%d %H:%M')
+        return ''
+
+    getPersianSubscribedAt.short_description = 'زمان ایجاد (شمسی)'
 
     class Meta:
         verbose_name = 'مشترک خبرنامه'

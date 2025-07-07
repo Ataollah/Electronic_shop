@@ -1,6 +1,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.urls import reverse
 from django.utils.text import slugify
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
 from appuser.models import  AppUser
@@ -57,6 +58,8 @@ class Post(models.Model):
     post_media_type = models.CharField(max_length=20, choices=MEDIA_TYPE_CHOICES, default='no_picture',
                                        verbose_name='نوع رسانه')
 
+    def get_absolute_url(self):
+        return reverse('blog-detail-view', args=[str(self.slug)])
 
     def save(self, *args, **kwargs):
         if not self.slug:

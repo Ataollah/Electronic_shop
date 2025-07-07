@@ -1,3 +1,4 @@
+import jdatetime
 from celery.backends.database import retry
 from django.db import models
 from django.utils import timezone
@@ -12,6 +13,14 @@ class Cart(models.Model):
     def __str__(self):
         return self.user.first_name
 
+
+    def getPersianCreatedAt(self):
+        if self.created_at:
+            jalali_date = jdatetime.datetime.fromgregorian(datetime=self.created_at)
+            return jalali_date.strftime('%Y/%m/%d %H:%M')
+        return ''
+    getPersianCreatedAt.short_description = 'زمان ایجاد (شمسی)'
+
     def totalPrice(self):
         try:
             total = sum(item.get_total_price() for item in self.items.all())
@@ -25,7 +34,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items', verbose_name='سبد خرید')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_in_cart', verbose_name='غذا')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_in_cart', verbose_name='محصول')
     price = models.BigIntegerField(default=0,verbose_name='قیمت')
     quantity = models.PositiveIntegerField(default=1,verbose_name='تعداد')
     added_at = models.DateTimeField(auto_now_add=True, verbose_name='زمان اضافه شدن')
