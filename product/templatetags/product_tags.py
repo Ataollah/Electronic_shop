@@ -9,6 +9,12 @@ def show_banner():
     banners = get_banner()
     return {'banners': banners}
 
+@register.inclusion_tag('Pages/Home/Components/ProductCategory/product_categories.html')
+def show_product_categories():
+    from product.cache.cached_product import get_product_categories
+    product_categories = get_product_categories()
+    return {'categories': product_categories}
+
 
 @register.inclusion_tag('Pages/Home/Components/AboutProduct/about_product.html')
 def show_about_product():
@@ -38,14 +44,14 @@ def show_brands():
 
 
 @register.inclusion_tag('Pages/Home/Components/FeaturedProducts/featured_products.html')
-def show_home_products():
-    from product.cache.cached_product import get_home_products
-    home_products = get_home_products()
-    return {'products': home_products,'current_time':timezone.now()}
+def show_featured_products():
+    from product.cache.cached_product import get_featured_products
+    special_list = get_featured_products()
+    return {'special_list': special_list,'current_time':timezone.now()}
 
 
 @register.inclusion_tag('Pages/Home/Components/ProductModal/product_modal.html')
 def products_modal():
-    from product.cache.cached_product import get_home_products
-    home_products = get_home_products()
+    from product.cache.cached_product import get_featured_products
+    home_products = get_featured_products()
     return {'products': home_products}

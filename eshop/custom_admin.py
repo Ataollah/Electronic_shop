@@ -12,9 +12,9 @@ import newsletter.apps
 
 
 class CustomAdminSite(AdminSite):
-    site_header = 'Sufficient'
+    site_header = 'E-Shop'
     site_title = 'پنل ادمین '
-    index_title = 'پنل مدیریتی Sufficient'
+    index_title = 'پنل مدیریتی E-Shop'
 
     def get_app_list(self, request, *args, **kwargs):
         app_list = super().get_app_list(request)

@@ -20,6 +20,14 @@ def get_banner():
         cache.set('banner', result, DEBUG_CACHE_TIME)
     return result
 
+def get_product_categories():
+    result = cache.get('product_categories')
+    if not result:
+        from product.models import Category
+        result = Category.objects.filter(show_on_homepage=True).order_by('order')
+        cache.set('product_categories', result, DEBUG_CACHE_TIME)
+    return result
+
 def get_about_product():
     result = cache.get('about_product')
     if not result:
@@ -55,10 +63,10 @@ def get_brands():
         cache.set('brands', result, DEBUG_CACHE_TIME)
     return result
 
-def get_home_products():
-    result = cache.get('home_products')
+def get_featured_products():
+    result = cache.get('featured_products')
     if not result:
-        from product.models import Product
-        result = Product.objects.filter(show_on_homepage=True).order_by('order')
-        cache.set('home_products', result, DEBUG_CACHE_TIME)
+        from product.models import SpecialList
+        result = SpecialList.objects.prefetch_related('special_list_items').all().order_by('order')
+        cache.set('featured_products', result, DEBUG_CACHE_TIME)
     return result

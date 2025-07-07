@@ -90,6 +90,24 @@ class BrandsAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 
+class SpecialListItemInline(admin.TabularInline):
+    model = SpecialListItem
+    extra = 1
+    fields = ('product', 'order')
+    ordering = ('order',)
+    autocomplete_fields = ('product',)
+
+
+class SpecialListAdmin(admin.ModelAdmin):
+    model = SpecialList
+    list_display = ('title', 'order')
+    search_fields = ('title',)
+    ordering = ('-id',)
+    inlines = [SpecialListItemInline,]
+
+
+
+
 
 
 custom_admin_site.register(Product,ProductAdmin)
@@ -101,6 +119,7 @@ custom_admin_site.register(AboutProduct,AboutProductAdmin)
 custom_admin_site.register(AboutAfterBeforeProduct,AboutAfterBeforeProductAdmin)
 custom_admin_site.register(CountDownBanner,CountDownBannerAdmin)
 custom_admin_site.register(Brands,BrandsAdmin)
+custom_admin_site.register(SpecialList,SpecialListAdmin)
 
 
 

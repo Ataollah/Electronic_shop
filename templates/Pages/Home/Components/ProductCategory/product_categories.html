@@ -1,0 +1,22 @@
+<!-- banner__section__start -->
+<div class="collection__2 sp_top_80 sp_bottom_60">
+    <div class="container">
+        <div class="row grid__responsive">
+            {% for item in categories %}
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="collection__single__2">
+                        <div class="collection__img__2">
+                            {%  if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="collection__text__2">
+                            <h5><a href="{% url 'shop-view' %}?category={{ item.id }}" tabindex="0">{{ item.title }}</a></h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- banner__section__end -->
