@@ -71,7 +71,8 @@ INSTALLED_APPS = [
     'order',
     'siteInfo',
     'zarinpal',
-    'iran'
+    'iran',
+    'supplier'
 ]
 
 MIDDLEWARE = [

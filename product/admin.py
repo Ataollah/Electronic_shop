@@ -100,6 +100,7 @@ class SpecialListItemInline(admin.TabularInline):
 
 class SpecialListAdmin(admin.ModelAdmin):
     model = SpecialList
+    prepopulated_fields = {"slug": ("title",)}
     list_display = ('title', 'order')
     search_fields = ('title',)
     ordering = ('-id',)

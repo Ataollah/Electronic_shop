@@ -7,8 +7,11 @@ import order.apps
 import product.apps
 import blog.apps
 import siteInfo.apps
+import supplier
 import zarinpal.apps
 import newsletter.apps
+import supplier.apps
+import iran.apps
 
 
 class CustomAdminSite(AdminSite):
@@ -28,6 +31,8 @@ class CustomAdminSite(AdminSite):
             newsletter.apps.NewsletterConfig.verbose_name: 7,
             zarinpal.apps.ZarinpalConfig.verbose_name: 9,
             siteInfo.apps.SiteInfoConfig.verbose_name: 10,
+            iran.apps.IranConfig.verbose_name: 11,
+            supplier.apps.SupplierConfig.verbose_name: 12,
             "Site": 20,
         }
         model_ordering = {
@@ -67,6 +72,8 @@ class CustomAdminSite(AdminSite):
             'District':34,
             'City':35,
             'Rural':36,
+            'Supplier':37,
+            'Salesman':38,
             'django.contrib.sites':40,
         }
         app_list.sort(key=lambda x: app_ordering.get(x['name'], 100))

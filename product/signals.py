@@ -1,7 +1,10 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
-from product.models import Product, Banner, AboutProduct, CountDownBanner, AboutAfterBeforeProduct, Brands
+
+from blog.models import PostList
+from product.models import Product, Banner, AboutProduct, CountDownBanner, AboutAfterBeforeProduct, Brands, SpecialList, \
+    SpecialListItem
 
 
 @receiver(post_save, sender=Product)
@@ -35,6 +38,18 @@ def invalidate_after_before_product_cache(sender, **kwargs):
 @receiver(post_delete, sender=Brands)
 def invalidate_brands_cache(sender, **kwargs):
     cache.delete('brands')
+
+
+@receiver(post_save, sender=Product)
+@receiver(post_delete, sender=Product)
+@receiver(post_save, sender=SpecialList)
+@receiver(post_delete, sender=SpecialList)
+@receiver(post_save, sender=SpecialListItem)
+@receiver(post_delete, sender=SpecialListItem)
+def invalidate_featured_products_cache(sender, **kwargs):
+    cache.delete('featured_products')
+    print('featured_products invalidated')
+
 
 
 

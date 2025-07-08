@@ -67,6 +67,6 @@ def get_featured_products():
     result = cache.get('featured_products')
     if not result:
         from product.models import SpecialList
-        result = SpecialList.objects.prefetch_related('special_list_items').all().order_by('order')
+        result = SpecialList.objects.prefetch_related('items').all().order_by('order')
         cache.set('featured_products', result, DEBUG_CACHE_TIME)
     return result
