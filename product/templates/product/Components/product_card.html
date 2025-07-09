@@ -86,11 +86,23 @@
                 <a href="{% url 'product-detail-view' item.slug %}" tabindex="0">{{ item.title }}</a>
             {% endif %}
         </h3>
-        <div class="grid__wraper__price">
+        {% if item.price_inquiry %}
+             <div class="grid__wraper__price">
+             <form action="{% url 'price-inquiry-view'  %}" method="post">
+                 {% csrf_token %}
+                 <input type="hidden" name="product_id" value="{{ item.id }}">
+                 <button type="submit" class="default__button btn__yellow">استعلام قیمت</button>
+             </form>
+
+             </div>
+        {% else %}
+            <div class="grid__wraper__price">
             {% if item.old_price %}
                 <del>{{ item.old_price|intcomma:False }} ریال</del>
             {% endif %}
             <span>{{ item.current_price|intcomma:False }} ریال</span>
         </div>
+        {% endif %}
+
     </div>
 </div>

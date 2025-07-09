@@ -1,6 +1,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -49,6 +50,7 @@ class Product(models.Model):
     image_tag = models.TextField(verbose_name="برچسب عکس", null=True, blank=True)
     offer_start_date = models.DateField(verbose_name="تاریخ شروع", auto_now=True)
     offer_end_date = models.DateTimeField(verbose_name="تاریخ انقضا", null=True, blank=True, default=datetime.datetime.now)
+    price_inquiry = models.BooleanField(verbose_name="درخواست قیمت", default=False)
 
     def __str__(self):
         return self.title
@@ -258,3 +260,30 @@ class SpecialListItem(models.Model):
         ordering = ['order']
 
 
+class PriceInquiryRequest(models.Model):
+    REQUEST_STATUS = [
+        ('waiting', 'در انتظار'),
+        ('answered', 'پاسخ داده شده'),
+    ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='price_inquiries')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='price_inquiries')
+    status = models.CharField(max_length=20, choices=REQUEST_STATUS, default='waiting', verbose_name="وضعیت")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "درخواست استعلام قیمت"
+        verbose_name_plural = "درخواست‌های استعلام قیمت"
+        ordering = ['-created_at']
+
+
+    @classmethod
+    def get_or_create_waiting(cls, user, product):
+        if not user.is_authenticated:
+            return None, False
+        inquiry = cls.objects.filter(user=user, product=product, status='waiting').first()
+        if inquiry:
+            return inquiry, False
+        return cls.objects.create(user=user, product=product), True
+
+    def __str__(self):
+        return f"{self.user} - {self.product} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"

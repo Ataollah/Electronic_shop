@@ -107,7 +107,7 @@ class CreateUserForm(forms.ModelForm):
     username = forms.CharField(label='نام کاربری', max_length=50)  # Explicitly define the field
     password1 = forms.CharField(label='کلمه عبور', widget=forms.PasswordInput)
     password2 = forms.CharField(label='تکرار کلمه عبور', widget=forms.PasswordInput)
-    email = forms.EmailField(label='ایمیل', max_length=50)
+    email = forms.EmailField(label='ایمیل',required=False, max_length=50)
     postal_code = forms.CharField(label='کدپستی', widget=forms.TextInput, max_length=10, min_length=10)
 
     def __init__(self, *args, **kwargs):

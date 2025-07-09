@@ -106,6 +106,13 @@ class SpecialListAdmin(admin.ModelAdmin):
     ordering = ('-id',)
     inlines = [SpecialListItemInline,]
 
+class PriceInquiryRequestAdmin(admin.ModelAdmin):
+    model = PriceInquiryRequest
+    list_display = ('product', 'user', 'created_at')
+    search_fields = ('product__title', 'user__email')
+    ordering = ('-created_at',)
+    list_filter = ('created_at',)
+
 
 
 
@@ -121,6 +128,7 @@ custom_admin_site.register(AboutAfterBeforeProduct,AboutAfterBeforeProductAdmin)
 custom_admin_site.register(CountDownBanner,CountDownBannerAdmin)
 custom_admin_site.register(Brands,BrandsAdmin)
 custom_admin_site.register(SpecialList,SpecialListAdmin)
+custom_admin_site.register(PriceInquiryRequest,PriceInquiryRequestAdmin)
 
 
 

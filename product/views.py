@@ -1,9 +1,14 @@
 from curses.ascii import controlnames
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import render
+from django.views import View
 from django.views.generic import ListView, DetailView
+from appuser.mixin import CustomerRequiredMixin
 from product.models import Product, Category
 from siteInfo.cache.site_info_cache import getSiteInfo
+from .models import PriceInquiryRequest
 
 
 # Create your views here.
@@ -66,9 +71,15 @@ class ProductDetailView(DetailView):
         return context
 
 
+class PriceInquiryRequestView(LoginRequiredMixin, CustomerRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=product_id)
+        user = request.user
 
+        inquiry = PriceInquiryRequest.objects.filter(user=user, product=product, status='waiting').first()
+        if inquiry:
+            return render(request, 'product/InquiryExisted/already_existed.html', {'inquiry': inquiry})
 
-
-
-
-
+        PriceInquiryRequest.objects.create(user=user, product=product, status='waiting')
+        return render(request, 'product/InquirySuccess/inquiry_success.html', {'product': product})

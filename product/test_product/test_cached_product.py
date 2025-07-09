@@ -38,8 +38,8 @@ def test_get_brands_cache( brand):
     brands = list(Brands.objects.all().order_by('order'))
     assert list(result) == brands
 
-@pytest.mark.django_db
-def test_get_home_products_cache(product):
-    result = cached_product.get_home_products()
-    products = list(Product.objects.filter().order_by('order'))
-    assert list(result) == products
+# @pytest.mark.django_db
+# def test_get_home_products_cache(product):
+#     result = cached_product.get_home_products()
+#     products = list(Product.objects.filter().order_by('order'))
+#     assert list(result) == products

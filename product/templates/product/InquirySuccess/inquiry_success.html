@@ -1,0 +1,53 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    درخواست استعلام قیمت
+{% endblock %}
+
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+     <!-- breadcrumb__start -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb__title">
+                        <h1> درخواست استعلام قیمت</h1>
+                        <ul>
+                            <li>
+                                <a href="{% url 'home' %}">خانه</a>
+                            </li>
+                            <li class="color__blue">
+                                 درخواست استعلام قیمت
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb__end -->
+
+    <!-- coll__section__start -->
+    <div class="coll__section sp_top_80">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                       <h3> درخواست استعلام قیمت  انجام رسید </h3>
+                       <h6>بعد از بررسی و دریافت قیمت از طریق پیام کوتاه یا تماس تلفنی قیمت به شما اطلاع داده خواهد شد</h6>
+                        <a  href="{% url 'home' %}" class="default__button">
+                            <span>صفحه اصلی</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- coll__section__end -->
+
+{% endblock %}

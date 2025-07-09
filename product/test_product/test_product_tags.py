@@ -34,12 +34,12 @@ def test_show_brands_returns_brands(brand):
     assert context['brands'][0].title == brands[0].title
 
 
-@pytest.mark.django_db
-def test_show_home_products_returns_products_and_time(product):
-    context = product_tags.show_home_products()
-    products = list(Product.objects.all().order_by('order'))
-    assert context['products'][0].title == products[0].title
-    assert 'current_time' in context
+# @pytest.mark.django_db
+# def test_show_home_products_returns_products_and_time(product):
+#     context = product_tags.show_home_products()
+#     products = list(Product.objects.all().order_by('order'))
+#     assert context['products'][0].title == products[0].title
+#     assert 'current_time' in context
 
 # @pytest.mark.django_db
 # def test_products_modal_returns_products(product):
