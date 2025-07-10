@@ -1,0 +1,30 @@
+{% extends 'Layout/Base/base.html' %}
+
+{% block title %}
+    صفحه ناموجود
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- coll__section__start -->
+    <div class="coll__section sp_top_80">
+        <div class="container coll__color">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="coll__section__inner">
+                        <h6>صفحه ناموجود</h6>
+                        <h3>صفحه ای که دنبال آن می گردید موجود نمی باشد!!!</h3>
+                        <div class="button__wrapper">
+                            <a href="{% url 'home' %}" class="default__button">صفحه اصلی</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- coll__section__end -->
+
+{% endblock %}

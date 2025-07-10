@@ -11,23 +11,6 @@ from siteInfo.models import FAQ
 
 
 # Create your views here.
-
-
-class HomeView(TemplateView):
-    template_name = 'Pages/Home/home.html'
-
-    def get(self, request, *args, **kwargs):
-        form = SubscriberForm()
-        return render(request, self.template_name, {'sub_form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = SubscriberForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('newsletter:success')
-        print('sub form error', form.non_field_errors())
-        return render(request, self.template_name, {'sub_form': form})
-
 class BaseCommonPageView(TemplateView):
     template_name = 'Pages/Common/common.html'
     page_type = ''
@@ -49,6 +32,7 @@ class PrivacyPolicyView(BaseCommonPageView):
 class TermsOfUseView(BaseCommonPageView):
    # template_name = 'Page/TermsOfUse/terms_of_use.html'
     page_type = 'terms_of_use'
+
 
 class FAQView(TemplateView):
     template_name = 'Pages/FAQ/faq.html'

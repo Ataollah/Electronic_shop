@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path,include
 from blog.BlogSitemap import BlogSiteMap
 from product.ProductSitemap import ProductSitemap
-from siteInfo.views import HomeView
+from eshop.views import HomeView,PageNotFoundView,PermissionDeniedView
 from eshop import settings
 from eshop.custom_admin import custom_admin_site
 from django.contrib.sitemaps.views import sitemap
@@ -36,6 +36,7 @@ urlpatterns = [
     path("admin/", custom_admin_site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # Add this line
     path("", HomeView.as_view(), name="home"),
+
     path('blog/', include('blog.urls')),
     path('siteInfo/', include('siteInfo.urls')),
     path('appuser/', include('appuser.urls')),
@@ -50,6 +51,9 @@ urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap", )
 
 ]
+
+handler403 = PermissionDeniedView.as_view()
+handler404 = PageNotFoundView.as_view()
 
 if settings.DEBUG:
     from django.conf.urls.static import static
