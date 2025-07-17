@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 from appuser.mixin import CustomerRequiredMixin
-from product.models import Product, Category
+from product.models import Product, Category, ProductVisit
 from siteInfo.cache.site_info_cache import getSiteInfo
 from .models import PriceInquiryRequest
 
@@ -67,8 +67,22 @@ class ProductDetailView(DetailView):
             id=self.object.id).order_by('?')[:4]
         context['siteInfo'] = getSiteInfo()
         context['questions'] = self.object.questions.all().order_by('order')
-
         return context
+
+    def get(self,request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        product = self.get_object()
+        user = request.user if request.user.is_authenticated else None
+        ip = request.META.get('REMOTE_ADDR')
+        device = request.META.get('HTTP_USER_AGENT', '')
+        ProductVisit.objects.create(
+            user=user,
+            product=product,
+            ip_address=None if user else ip,
+            device_info=device
+        )
+        return response
+
 
 
 class PriceInquiryRequestView(LoginRequiredMixin, CustomerRequiredMixin, View):

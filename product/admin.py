@@ -113,6 +113,28 @@ class PriceInquiryRequestAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     list_filter = ('created_at',)
 
+class SpecificationAdmin(admin.ModelAdmin):
+    model = Specification
+    list_display = ('category__title', 'name')
+    search_fields = ('category__title', 'name')
+    ordering = ('-id',)
+    list_filter = ('category',)
+
+
+class ProductSpecificationValueAdmin(admin.ModelAdmin):
+    model = ProductSpecificationValue
+    list_display = ('product', 'specification', 'value')
+    search_fields = ('product__title', 'specification__name', 'value')
+    ordering = ('-id',)
+    list_filter = ('product', 'specification')
+
+class ProductVisitAdmin(admin.ModelAdmin):
+    model = ProductVisit
+    list_display = ('user', 'product', 'getVisited_PersainDate', 'ip_address', 'device_info')
+    search_fields = ('user__username', 'product__title')
+    ordering = ('-visited_at',)
+    list_filter = ('visited_at',)
+
 
 
 
@@ -129,6 +151,9 @@ custom_admin_site.register(CountDownBanner,CountDownBannerAdmin)
 custom_admin_site.register(Brands,BrandsAdmin)
 custom_admin_site.register(SpecialList,SpecialListAdmin)
 custom_admin_site.register(PriceInquiryRequest,PriceInquiryRequestAdmin)
+custom_admin_site.register(Specification,SpecificationAdmin)
+custom_admin_site.register(ProductSpecificationValue,ProductSpecificationValueAdmin)
+custom_admin_site.register(ProductVisit,ProductVisitAdmin)
 
 
 

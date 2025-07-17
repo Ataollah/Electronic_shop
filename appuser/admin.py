@@ -33,7 +33,14 @@ class VerificationUserAdmin(ModelAdminJalaliMixin,ModelAdmin):
         return datetime2jalali(obj.valid_until).strftime('%Y/%m/%d  %H:%M:%S')
     valid_until_jalali.short_description = 'اعتبار کد تایید'
 
+class PageVisitedAdmin(ModelAdminJalaliMixin,ModelAdmin):
+    model = PageVisit
+    list_display = ('user__username','ip_address','getVisited_PersainDate')
+    search_fields = ('user__username', 'ip_address', 'page_url','visited_at')
+    ordering = ('-visited_at',)
+
 
 custom_admin_site.register(AppUser,AppUserAdmin)
 custom_admin_site.register(VerificationUser,VerificationUserAdmin)
+custom_admin_site.register(PageVisit,PageVisitedAdmin)
 custom_admin_site.register(Group)

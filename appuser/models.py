@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
+import jdatetime
 
 
 class VerificationUser(models.Model):
@@ -67,6 +68,31 @@ class AppUser(AbstractUser):
     class Meta:
         verbose_name = 'کاربر'
         verbose_name_plural = 'کاربران'
+
+
+class PageVisit(models.Model):
+    user = models.ForeignKey(AppUser, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='کاربر')
+    ip_address = models.GenericIPAddressField(null=True, blank=True,verbose_name='آدرس آی پی')
+    device_info = models.CharField(max_length=255, null=True, blank=True,verbose_name='اطلاعات دستگاه')
+    page_url = models.CharField(max_length=255,verbose_name='آدرس صفحه')
+    visited_at = models.DateTimeField(auto_now_add=True,verbose_name='زمان بازدید')
+
+    def getVisited_PersainDate(self):
+        if self.visited_at:
+            jalali_date = jdatetime.datetime.fromgregorian(datetime=self.visited_at)
+            return jalali_date.strftime('%Y/%m/%d %H:%M')
+        return ''
+    getVisited_PersainDate.short_description = 'زمان بازدید (شمسی)'
+
+    def __str__(self):
+        return f"{self.user or self.ip_address} visited {self.page_url} at {self.visited_at}"
+
+    class Meta:
+        verbose_name = 'بازدید صفحه'
+        verbose_name_plural = 'بازدیدهای صفحه'
+        ordering = ['-visited_at']
+
+
 
 
 

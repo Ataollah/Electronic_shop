@@ -2,7 +2,10 @@ import pytest
 from django.urls import reverse
 from product.test_product.test_product_fixture import *
 from appuser.tests.appuser_fixtures import customer_user,app_user
-from product.models import PriceInquiryRequest
+from product.models import PriceInquiryRequest,ProductVisit
+from django.test import RequestFactory
+from django.contrib.auth.models import AnonymousUser, User
+
 
 @pytest.mark.django_db
 def test_shop_list_view(client,category,product):
@@ -50,3 +53,18 @@ def test_price_inquiry_create_success(client, customer_user, product):
     print(response.templates)
     assert 'product/InquirySuccess/inquiry_success.html' in [t.name for t in response.templates]
     assert PriceInquiryRequest.objects.filter(user=customer_user, product=product, status='waiting').count() == 1
+
+
+@pytest.mark.django_db
+def test_product_detail_creates_product_visit(client,customer_user,product):
+    url = reverse('product-detail-view', kwargs={'slug': product.slug})
+
+    client.force_login(customer_user)
+    response = client.get(url, HTTP_USER_AGENT='TestAgent', REMOTE_ADDR='127.0.0.1')
+
+    assert response.status_code == 200
+    visit = ProductVisit.objects.filter(product=product, user=customer_user).first()
+    assert visit is not None
+    assert visit.device_info == 'TestAgent'
+    assert visit.ip_address is None  # Beca
+

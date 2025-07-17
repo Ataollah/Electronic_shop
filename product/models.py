@@ -1,3 +1,4 @@
+import jdatetime
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
@@ -287,3 +288,58 @@ class PriceInquiryRequest(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.product} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+
+# product/models.py
+class ProductVisit(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,verbose_name='کابر')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name='محصول')
+    ip_address = models.GenericIPAddressField(null=True, blank=True,verbose_name='آدرس آی پی')
+    device_info = models.CharField(max_length=255, null=True, blank=True,verbose_name='اطلاعات دستگاه')
+    visited_at = models.DateTimeField(auto_now_add=True,verbose_name='زمان بازدید')
+
+    def getVisited_PersainDate(self):
+        if self.visited_at:
+            jalali_date = jdatetime.datetime.fromgregorian(datetime=self.visited_at)
+            return jalali_date.strftime('%Y/%m/%d %H:%M')
+        return ''
+
+    getVisited_PersainDate.short_description = 'زمان بازدید (شمسی)'
+
+    def __str__(self):
+        return f"{self.user} - {self.product} - {self.visited_at.strftime('%Y-%m-%d %H:%M')}"
+
+    class Meta:
+        verbose_name = "بازدید محصول"
+        verbose_name_plural = "بازدیدهای محصولات"
+        ordering = ['-visited_at']
+
+
+
+# models.py
+
+class Specification(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='specifications',verbose_name='نوع محصول')
+    name = models.CharField(max_length=100, verbose_name="نام خصوصیت")
+
+    def __str__(self):
+        return f"{self.category.title} - {self.name}"
+
+    class Meta:
+        verbose_name = "خصوصیت"
+        verbose_name_plural = "خصوصیات"
+        ordering = ['category__title', 'name']
+
+class ProductSpecificationValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specification_values',verbose_name='محصول')
+    specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name='values',verbose_name='خصوصیت')
+    value = models.CharField(max_length=255, verbose_name="مقدار")
+    order = models.IntegerField(default=0,verbose_name='ترتیب نمایش')
+
+    def __str__(self):
+        return f"{self.product.title} - {self.specification.name}: {self.value}"
+
+    class Meta:
+        verbose_name = " خصوصیت محصول"
+        verbose_name_plural = " خصوصیات محصولات"
+        ordering = ['order']

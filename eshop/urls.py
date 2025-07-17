@@ -36,7 +36,6 @@ urlpatterns = [
     path("admin/", custom_admin_site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # Add this line
     path("", HomeView.as_view(), name="home"),
-
     path('blog/', include('blog.urls')),
     path('siteInfo/', include('siteInfo.urls')),
     path('appuser/', include('appuser.urls')),

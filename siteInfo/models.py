@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
+from eshop import settings
 
 
 class Menu(models.Model):
@@ -196,4 +197,5 @@ class Testimonial(models.Model):
     class Meta:
         verbose_name = "تجربه مشتری"
         verbose_name_plural = "تجربیات مشتریان"
+
 
