@@ -1,53 +1,68 @@
 {% load humanize %}
-{% for item in products %}
-    <!-- modal__section__start -->
-    <div class="grid__quick__view__modal modalarea modal fade" id="exampleModal{{ item.id }}" tabindex="-1"
-         aria-labelledby="exampleModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
-                <div class="modal-body">
-                    <div class="row align-items-center">
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                            <div class="grid__quick__img">
-                                <img src="{{ item.primary_image.url }}" alt="">
-                            </div>
+
+<!-- modal__section__start -->
+<div class="grid__quick__view__modal modalarea modal fade" id="exampleModal{{ item.id }}" tabindex="-1"
+     aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+            <div class="modal-body">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="grid__quick__img">
+                            <img src="{{ item.primary_image.url }}" alt="">
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                            <div class="grid__quick__content">
-                                <h3>
-                                    {{ item.title }}
-                                </h3>
-                                <div class="quick__price">
-                                    {% if item.old_price %}
-                                        <del>{{ item.old_price|intcomma:False }} ریال
-                                        </del>{% endif %} {{ item.current_price|intcomma:False }} ریال
-                                </div>
-                                <h6>موجودی : {{ item.inventory }}</h6>
-                                {{ item.description|safe }}
-                                {% if item.inventory %}
-                                    <div class="featurearea__quantity">
-                                        <form id="addItemsToCart" method="post" action="{% url 'add-to-cart' %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="product_id" value="{{ item.id }}">
-                                            <div class="qty-container">
-                                                <button class="qty-btn-minus btn-qty" type="button">-</button>
-                                                <input type="number" name="qty" value="1" min="1"
-                                                       style="-webkit-appearance: none; margin: 0;"
-                                                       max="{{ item.inventory }}" class="input-qty"
-                                                       data-inventory="{{ item.inventory }}">
-                                                <button class="qty-btn-plus btn-qty" type="button">+</button>
-                                            </div>
-                                            <button type="submit" class="default__button">افزودن به سبد خرید</button>
-                                        </form>
-                                    </div>
-                                {% endif %}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div class="grid__quick__content">
+                            <h3>
+                                {{ item.title }}
+                            </h3>
+                            <div class="quick__price">
+                                {% if item.old_price %}
+                                    <del>{{ item.old_price|intcomma:False }} ریال
+                                    </del>{% endif %} {{ item.current_price|intcomma:False }} ریال
                             </div>
+                            <h6>موجودی : {{ item.inventory }}</h6>
+                            {{ item.description|safe }}
+                            {% if item.price_inquiry %}
+                                <div class="grid__wraper__price">
+                                    <form action="{% url 'price-inquiry-view' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                                        <button type="submit" class="default__button btn__yellow">استعلام قیمت</button>
+                                    </form>
+
+                                </div>
+                            {% else %}
+                                <div class="grid__wraper__price">
+                                    {% if item.old_price %}
+                                        <del>{{ item.old_price|intcomma:False }} ریال</del>
+                                    {% endif %}
+                                    <span>{{ item.current_price|intcomma:False }} ریال</span>
+                                </div>
+                            {% endif %}
+                            {% if item.inventory %}
+                                <div class="featurearea__quantity">
+                                    <form id="addItemsToCart" method="post" action="{% url 'add-to-cart' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                                        <div class="qty-container">
+                                            <button class="qty-btn-minus btn-qty" type="button">-</button>
+                                            <input type="number" name="qty" value="1" min="1"
+                                                   style="-webkit-appearance: none; margin: 0;"
+                                                   max="{{ item.inventory }}" class="input-qty"
+                                                   data-inventory="{{ item.inventory }}">
+                                            <button class="qty-btn-plus btn-qty" type="button">+</button>
+                                        </div>
+                                        <button type="submit" class="default__button">افزودن به سبد خرید</button>
+                                    </form>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% endfor %}
-
+</div>

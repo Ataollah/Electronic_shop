@@ -30,11 +30,6 @@ def show_count_down_banner():
     return {'item': count_down_banner}
 
 
-@register.inclusion_tag('Pages/Home/Components/AboutAfterBeforeProduct/about_after_before_product.html')
-def show_after_before_product():
-    from product.cache.cached_product import get_AfterBeforeProduct
-    after_before_product = get_AfterBeforeProduct()
-    return {'item': after_before_product}
 
 @register.inclusion_tag('Pages/Home/Components/Brands/brands.html')
 def show_brands():
@@ -50,8 +45,3 @@ def show_featured_products():
     return {'special_list': special_list,'current_time':timezone.now()}
 
 
-@register.inclusion_tag('Pages/Home/Components/ProductModal/product_modal.html')
-def products_modal():
-    from product.cache.cached_product import get_featured_products
-    home_products = get_featured_products()
-    return {'products': home_products}

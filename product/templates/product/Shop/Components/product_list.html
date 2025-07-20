@@ -181,3 +181,9 @@
 
 
 </div>
+{% for item in page_obj %}
+  {% include 'Pages/Home/Components/ProductModal/product_modal.html' %}
+{% endfor %}
+{% for item in products %}
+     {% include 'Pages/Home/Components/ProductModal/product_modal.html' %}
+{% endfor %}

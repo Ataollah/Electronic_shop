@@ -46,16 +46,20 @@
                         <div class="featurearea__big__img">
                             {% for item in product.images.all %}
                                 <div class="featurearea__single__big__img">
+                                {% if item.image %}
                                     <img src="{{ item.image.url }}" alt="Image : {{ item.id }}">
+                                {% endif %}
                                 </div>
                             {% endfor %}
 
                         </div>
                         <div class=" featurearea__thumb__img featurearea__thumb__img__slider__active slider__default__arrow">
                             {% for item in product.images.all %}
+                                {% if item.thumbnail %}
                                 <div class="featurearea__single__thumb__img">
                                     <img src="{{ item.thumbnail.url }}" alt="thumbnail : {{ item.id }}">
                                 </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
 
@@ -78,6 +82,20 @@
                         </div>
                         <hr>
                         <div class="single__product__description">
+                            <table>
+                                {% for specs in product.specification_values.all %}
+                                    {% if specs.specification.type == 'master' %}
+                                       <tr>
+                                            <td >{{ specs }}</td>
+
+                                           <td style="padding-right:50px ">{{ specs.value }}</td>
+                                       </tr>
+                                    {% endif %}
+                                 {% endfor %}
+
+                            </table>
+                            <br/>
+
                             {{ product.short_description|safe }}
                         </div>
 
@@ -197,6 +215,10 @@
                     <ul class="nav  descriptionarea__tab__button" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="descriptionarea__link active" data-bs-toggle="tab"
+                                    data-bs-target="#specs" type="button" aria-selected="false" role="tab"
+                                    tabindex="-1">خصوصیات
+                            </button>
+                            <button class="descriptionarea__link " data-bs-toggle="tab"
                                     data-bs-target="#description" type="button" aria-selected="false" role="tab"
                                     tabindex="-1">توضیحات
                             </button>
@@ -204,11 +226,21 @@
 
                     </ul>
                     <div class="tab-content tab__content__wrapper" id="myTabContent1">
-                        <div class="tab-pane fade active show" id="description" role="tabpanel"
+                        <div class="tab-pane fade active show" id="specs" role="tabpanel"
+                             aria-labelledby="specs">
+                             <table>
+                                {% for specs in product.specification_values.all %}
+                                       <tr>
+                                            <td >{{ specs }}</td>
+                                           <td style="padding-right:50px ">{{ specs.value }}</td>
+                                       </tr>
+                                 {% endfor %}
+                            </table>
+                        </div>
+                        <div class="tab-pane fade " id="description" role="tabpanel"
                              aria-labelledby="description">
                             {{ product.description | safe }}
                         </div>
-
                     </div>
                 </div>
             </div>

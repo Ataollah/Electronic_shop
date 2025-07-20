@@ -18,15 +18,8 @@
         </div>
         <div class="grid__wraper__icon">
             <ul>
-                <li>
-                    <span data-bs-toggle="modal" data-bs-target="#exampleModal{{ item.id }}">
-                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                           title="نمایش سریع" data-bs-original-title="نمایش سریع">
-                            <i class="far fa-eye"></i>
-                        </a>
-                    </span>
-                </li>
-                {% if item.inventory %}
+
+                {% if item.inventory and not item.price_inquiry %}
 
                     <li>
                      <form id="addOneItemToCart" method="post" action="{% url 'add-to-cart' %}">
@@ -42,13 +35,7 @@
 
                     </li>
                 {% endif %}
-                <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                       title="افزودن به لیست آرزوها"
-                       data-bs-original-title="افزودن به لیست آرزوها">
-                        <i class="far fa-heart"></i>
-                    </a>
-                </li>
+
 
 
             </ul>

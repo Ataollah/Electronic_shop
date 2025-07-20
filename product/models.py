@@ -36,6 +36,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name="نوع ", on_delete=models.CASCADE,null=True)
+    brand = models.ForeignKey('Brands', verbose_name="برند", on_delete=models.CASCADE, null=True, blank=True, related_name='products')
     show_on_homepage = models.BooleanField(verbose_name="نمایش در صفحه اصلی", default=False)
     order = models.IntegerField(verbose_name="ترتیب نمایش", default=0)
     title = models.CharField(verbose_name="عنوان", max_length=100)
@@ -59,10 +60,17 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product-detail-view', kwargs={'slug': self.slug})
 
+
     def save(self, *args, **kwargs):
         update_file_field(Product, self.id, 'primary_image', self.primary_image)
         update_file_field(Product, self.id, 'secondary_image', self.secondary_image)
+        is_new = self.pk is None
         super().save(*args, **kwargs)
+        if self.category:
+            specifications = Specification.objects.filter(category=self.category)
+            for spec in specifications:
+                ProductSpecificationValue.objects.get_or_create(product=self, specification=spec, defaults={'value': ''})
+
 
     def delete(self, *args, **kwargs):
         delete_file_field(self.primary_image)
@@ -319,8 +327,14 @@ class ProductVisit(models.Model):
 # models.py
 
 class Specification(models.Model):
+    SPEC_TYPE = [
+        ('master', 'اصلی'),
+        ('detail', 'جزییات'),
+    ]
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='specifications',verbose_name='نوع محصول')
     name = models.CharField(max_length=100, verbose_name="نام خصوصیت")
+    type = models.CharField(max_length=10, choices=SPEC_TYPE, default='master', verbose_name='نوع خصوصیت')
+    order = models.IntegerField(default=0, verbose_name='ترتیب نمایش')
 
     def __str__(self):
         return f"{self.category.title} - {self.name}"
@@ -334,12 +348,10 @@ class ProductSpecificationValue(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specification_values',verbose_name='محصول')
     specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name='values',verbose_name='خصوصیت')
     value = models.CharField(max_length=255, verbose_name="مقدار")
-    order = models.IntegerField(default=0,verbose_name='ترتیب نمایش')
 
     def __str__(self):
-        return f"{self.product.title} - {self.specification.name}: {self.value}"
+        return f" {self.specification.name}"
 
     class Meta:
         verbose_name = " خصوصیت محصول"
         verbose_name_plural = " خصوصیات محصولات"
-        ordering = ['order']
