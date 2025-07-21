@@ -30,8 +30,8 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
-      VIRTUAL_HOST: vazaar.ir
-      LETSENCRYPT_HOST: vazaar.ir
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
       LETSENCRYPT_EMAIL: ata_shakeri@yahoo.com
     env_file:
       - .env
