@@ -32,6 +32,7 @@ def site_info(db):
         address='Test Address',
         telephone1='02112345678',
         telephone2='02187654321',
+        sell_mobile='02112345678',
         copyright='Test Copyright',
         copyright_link='https://wedosoft.ir',
         map_url='https://maps.google.com/?q=tehran',

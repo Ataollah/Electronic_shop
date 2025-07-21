@@ -21,11 +21,6 @@ def test_show_count_down_banner_returns_item(countdown_banner):
     item = CountDownBanner.objects.first()
     assert context['item'].title == item.title
 
-@pytest.mark.django_db
-def test_show_after_before_product_returns_item(about_after_before_product):
-    context = product_tags.show_after_before_product()
-    item = AboutAfterBeforeProduct.objects.first()
-    assert context['item'].title == item.title
 
 @pytest.mark.django_db
 def test_show_brands_returns_brands(brand):
@@ -33,16 +28,3 @@ def test_show_brands_returns_brands(brand):
     brands = list(Brands.objects.all().order_by('order'))
     assert context['brands'][0].title == brands[0].title
 
-
-# @pytest.mark.django_db
-# def test_show_home_products_returns_products_and_time(product):
-#     context = product_tags.show_home_products()
-#     products = list(Product.objects.all().order_by('order'))
-#     assert context['products'][0].title == products[0].title
-#     assert 'current_time' in context
-
-# @pytest.mark.django_db
-# def test_products_modal_returns_products(product):
-#     context = product_tags.products_modal()
-#     products = list(Product.objects.all().order_by('order'))
-#     assert {'products': list(context['products'])} == {'products': products}

@@ -57,7 +57,7 @@ RUN mkdir -p /app/media/website && \
 USER appuser
 
 # Expose the application port
-EXPOSE 8000
+EXPOSE 8003
 
 
 COPY entrypoint.sh /app/entrypoint.sh
@@ -78,5 +78,5 @@ ENTRYPOINT ["/app/entrypoint.sh"]
 
 
 # Start the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "sufficient.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8003", "--workers", "4", "eshop.wsgi:application"]
 #CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "sufficient.asgi:application"]

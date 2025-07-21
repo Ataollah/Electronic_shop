@@ -38,8 +38,9 @@ class SiteInfo(models.Model):
     email1 = models.EmailField(verbose_name='ایمیل')
     email2 = models.EmailField(null=True,blank=True,verbose_name='ایمیل')
     address = models.CharField(max_length=200, verbose_name='آدرس ')
-    telephone1 = models.CharField(max_length=20, verbose_name=' تلفن استعلام قیمت')
-    telephone2 = models.CharField(null=True,blank=True,max_length=20, verbose_name=' تلفن ')
+    telephone1 = models.CharField(max_length=20, verbose_name=' تلفن 1')
+    telephone2 = models.CharField(null=True,blank=True,max_length=20, verbose_name=' تلفن 2')
+    sell_mobile = models.CharField(null=True,blank=True,max_length=20, verbose_name='موبایل فروشنده')
     copyright = models.CharField(max_length=200, verbose_name=' کپی رایت ')
     copyright_link = models.URLField(default='https://wedosoft.ir', verbose_name='لینک کپی رایت')
     map_url = models.URLField(verbose_name='آدرس گوگل مپ')
@@ -48,6 +49,7 @@ class SiteInfo(models.Model):
     working_hours = models.TextField(null=True,blank=True,verbose_name='ساعات کاری')
     instagram_id = models.CharField(null=True,blank=True,max_length=200, verbose_name='آیدی اینستاگرام')
     is_selling = models.BooleanField(default=True, verbose_name='فروش فعال')
+
 
     def __str__(self):
         return self.name

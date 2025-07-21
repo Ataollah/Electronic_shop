@@ -196,7 +196,7 @@ def test_payment_failed_view_renders_template(client, customer_user):
     assert 'پرداخت  ناموفق'.encode('utf-8') in response.content  # Adjust if your template content differs
 
 
-
+@pytest.mark.django_db
 def test_payment_failed_view_requires_login(client):
     url = reverse('payment-failed-view')
     response = client.get(url)
@@ -219,6 +219,7 @@ def test_payment_succeeded_view_renders_template_and_context(client, customer_us
     assert 'پرداخت موفق'.encode('utf-8') in response.content  # Adjust if your template content differs
     assert response.context['order'] == order
 
+@pytest.mark.django_db
 def test_payment_succeeded_view_requires_login(client):
     url = reverse('payment-succeeded-view')
     response = client.get(url)

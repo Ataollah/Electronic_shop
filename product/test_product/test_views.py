@@ -5,6 +5,7 @@ from appuser.tests.appuser_fixtures import customer_user,app_user
 from product.models import PriceInquiryRequest,ProductVisit
 from django.test import RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
+from siteInfo.test.siteInfo_fixtures import site_info
 
 
 @pytest.mark.django_db
@@ -45,7 +46,7 @@ def test_price_inquiry_already_exists(client, customer_user, product):
     assert PriceInquiryRequest.objects.filter(user=customer_user, product=product, status='waiting').count() == 1
 
 @pytest.mark.django_db
-def test_price_inquiry_create_success(client, customer_user, product):
+def test_price_inquiry_create_success(client, customer_user, product,site_info):
     client.force_login(customer_user)
     url = reverse('price-inquiry-view')  # Replace with your url name
     response = client.post(url, {'product_id': product.id})

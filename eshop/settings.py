@@ -33,11 +33,11 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
-# CSRF_TRUSTED_ORIGINS =  config("CSRF_TRUSTED_ORIGINS").split(',')
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000"
-]
+CSRF_TRUSTED_ORIGINS =  config("CSRF_TRUSTED_ORIGINS").split(',')
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8000"
+# ]
 
 AUTH_USER_MODEL = 'appuser.AppUser'
 
@@ -118,9 +118,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DATABASE_NAME', 'eshop_db'),
          'USER': config('DATABASE_USERNAME', 'postgres'),
-         'PASSWORD': config('DATABASE_PASSWORD', '1'),
-         'HOST': config('DATABASE_HOST', 'localhost'),
-         'PORT': config('DATABASE_PORT', 5450),
+         'PASSWORD': config('DATABASE_PASSWORD', 'n;^c;H04%<p0wk.1:C3+'),
+         'HOST': config('DATABASE_HOST', 'vazzar_postgres'),
+         'PORT': config('DATABASE_PORT', 5432),
     },
 }
 

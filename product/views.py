@@ -111,7 +111,7 @@ class PriceInquiryRequestView(LoginRequiredMixin, CustomerRequiredMixin, View):
             message=f'درخواست استعلام قیمت برای محصول {product.title} با موفقیت ثبت شد. منتظر تماس ما باشید.'
         )
         sender.send_sms(
-            to=getSiteInfo().telephone1,
+            to=getSiteInfo().sell_mobile,
             message=f'درخواست استعلام قیمت برای محصول {product.title} توسط مشتری {user.username}ثبت شده است '
         )
 
