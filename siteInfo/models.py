@@ -43,7 +43,7 @@ class SiteInfo(models.Model):
     sell_mobile = models.CharField(null=True,blank=True,max_length=20, verbose_name='موبایل فروشنده')
     copyright = models.CharField(max_length=200, verbose_name=' کپی رایت ')
     copyright_link = models.URLField(default='https://wedosoft.ir', verbose_name='لینک کپی رایت')
-    map_url = models.URLField(verbose_name='آدرس گوگل مپ')
+    map_url = models.URLField(max_length=1000,verbose_name='آدرس گوگل مپ')
     enamad_id = models.CharField(null=True,blank=True,max_length=200, verbose_name='شماره نماد')
     enamad_tag = models.TextField(null=True,blank=True,verbose_name='تگ نماد')
     working_hours = models.TextField(null=True,blank=True,verbose_name='ساعات کاری')
