@@ -38,6 +38,7 @@ class ProductAltAdmin(admin.ModelAdmin):
     model = ProductProxy
     list_display = ('title', 'category',)
     list_filter = ('category',)
+    fields = ('title',)
     search_fields = ('title',)
     ordering = ('title',)
     inlines = [ProductSpecificationValueInline,]
