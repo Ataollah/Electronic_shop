@@ -70,7 +70,7 @@
                         <div class="single__product__heding">
                             <h2>{{ product.title }}</h2>
                         </div>
-                        {% if not item.price_inquiry %}
+                        {% if not product.price_inquiry %}
                             <div class="single__product__price">
                                 <span>{{ product.current_price|intcomma:False }} ریال</span>
                                 {% if product.old_price %}
@@ -99,7 +99,7 @@
 
                             {{ product.short_description|safe }}
                         </div>
-                        {% if not item.price_inquiry %}
+                        {% if not product.price_inquiry %}
                             <div class="single__product__special__feature">
                                 <ul>
                                     <li class="product__variant__inventory">
@@ -116,7 +116,7 @@
 
                         <hr>
 
-                        {% if not item.price_inquiry %}
+                        {% if not product.price_inquiry %}
                             <div class="single__product__quantity">
 
                                 {% if product.inventory %}
