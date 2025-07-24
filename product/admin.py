@@ -165,7 +165,7 @@ custom_admin_site.register(PriceInquiryRequest,PriceInquiryRequestAdmin)
 custom_admin_site.register(Specification,SpecificationAdmin)
 custom_admin_site.register(ProductSpecificationValue,ProductSpecificationValueAdmin)
 custom_admin_site.register(ProductVisit,ProductVisitAdmin)
-custom_admin_site.register(ProductProxy,ProductAdmin)
+custom_admin_site.register(ProductProxy,ProductAltAdmin)
 
 
 
