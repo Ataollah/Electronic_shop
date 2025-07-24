@@ -43,6 +43,13 @@ class ProductAltAdmin(admin.ModelAdmin):
     ordering = ('title',)
     inlines = [ProductSpecificationValueInline,]
 
+
+class SpecificationInline(admin.TabularInline):
+    model = Specification
+    extra = 1
+    fields = ('name', 'type','order',)
+
+
 class CategoryAdmin(admin.ModelAdmin):
     model = Category
     prepopulated_fields = {"slug": ("title",)}
@@ -50,6 +57,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('title',)
     search_fields = ('title',)
     ordering = ('title',)
+    inlines = [SpecificationInline,]
 
 
 
