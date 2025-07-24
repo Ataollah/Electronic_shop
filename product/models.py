@@ -3,7 +3,9 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
-
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 from Utility.orphan_file_cleaner import update_file_field, delete_file_field
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
@@ -90,8 +92,18 @@ class Gallery(models.Model):
 
     def save(self, *args, **kwargs):
         update_file_field(Gallery, self.id, 'image', self.image)
-        update_file_field(Gallery, self.id, 'thumbnail', self.thumbnail)
+       # update_file_field(Gallery, self.id, 'thumbnail', self.thumbnail)
         super().save(*args, **kwargs)
+
+
+        if self.image and not self.thumbnail:
+            img = Image.open(self.image)
+            img.thumbnail((300, 300))  # Set desired thumbnail size
+            thumb_io = BytesIO()
+            img.save(thumb_io, format='JPEG')
+            thumb_name = f"thumb_{self.image.name.split('/')[-1]}"
+            self.thumbnail.save(thumb_name, ContentFile(thumb_io.getvalue()), save=False)
+            super().save(update_fields=['thumbnail'])
 
     def delete(self, *args, **kwargs):
         delete_file_field(self.image)

@@ -46,9 +46,9 @@
                         <div class="featurearea__big__img">
                             {% for item in product.images.all %}
                                 <div class="featurearea__single__big__img">
-                                {% if item.image %}
-                                    <img src="{{ item.image.url }}" alt="Image : {{ item.id }}">
-                                {% endif %}
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" alt="Image : {{ item.id }}">
+                                    {% endif %}
                                 </div>
                             {% endfor %}
 
@@ -56,9 +56,9 @@
                         <div class=" featurearea__thumb__img featurearea__thumb__img__slider__active slider__default__arrow">
                             {% for item in product.images.all %}
                                 {% if item.thumbnail %}
-                                <div class="featurearea__single__thumb__img">
-                                    <img src="{{ item.thumbnail.url }}" alt="thumbnail : {{ item.id }}">
-                                </div>
+                                    <div class="featurearea__single__thumb__img">
+                                        <img src="{{ item.thumbnail.url }}" alt="thumbnail : {{ item.id }}">
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -70,66 +70,70 @@
                         <div class="single__product__heding">
                             <h2>{{ product.title }}</h2>
                         </div>
-                        <div class="single__product__price">
-                            <span>{{ product.current_price|intcomma:False }} ریال</span>
-                            {% if product.old_price %}
-                                <del>{{ product.old_price|intcomma:False }} ریال</del>
-                            {% endif %}
-                            {% if product.discount %}
-                                <label>-{{ product.discount }}% تخفیف </label>
-                            {% endif %}
-
-                        </div>
+                        {% if not item.price_inquiry %}
+                            <div class="single__product__price">
+                                <span>{{ product.current_price|intcomma:False }} ریال</span>
+                                {% if product.old_price %}
+                                    <del>{{ product.old_price|intcomma:False }} ریال</del>
+                                {% endif %}
+                                {% if product.discount %}
+                                    <label>-{{ product.discount }}% تخفیف </label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                         <hr>
                         <div class="single__product__description">
                             <table>
                                 {% for specs in product.specification_values.all %}
                                     {% if specs.specification.type == 'master' %}
-                                       <tr>
-                                            <td >{{ specs }}</td>
+                                        <tr>
+                                            <td>{{ specs }}</td>
 
-                                           <td style="padding-right:50px ">{{ specs.value }}</td>
-                                       </tr>
+                                            <td style="padding-right:50px ">{{ specs.value }}</td>
+                                        </tr>
                                     {% endif %}
-                                 {% endfor %}
+                                {% endfor %}
 
                             </table>
                             <br/>
 
                             {{ product.short_description|safe }}
                         </div>
-
-                        <div class="single__product__special__feature">
-                            <ul>
-                                <li class="product__variant__inventory">
-                                    <strong class="inventory__title">موجودی:</strong>
-                                    <span class="variant__inventory">{{ product.inventory }} عدد در انبار</span>
-                                </li>
-                                <li>
-                                    <strong>کد محصول:</strong>
-                                    <span class="variant__sku">{{ product.id }}</span>
-                                </li>
-                            </ul>
-                        </div>
+                        {% if not item.price_inquiry %}
+                            <div class="single__product__special__feature">
+                                <ul>
+                                    <li class="product__variant__inventory">
+                                        <strong class="inventory__title">موجودی:</strong>
+                                        <span class="variant__inventory">{{ product.inventory }} عدد در انبار</span>
+                                    </li>
+                                    <li>
+                                        <strong>کد محصول:</strong>
+                                        <span class="variant__sku">{{ product.id }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
 
                         <hr>
 
+                        {% if not item.price_inquiry %}
+                            <div class="single__product__quantity">
 
-                        <div class="single__product__quantity">
-
-                            {% if product.inventory %}
-                                <div class="qty-container">
-                                    <button class="qty-btn-minus btn-qty" type="button">-</button>
-                                    <input type="number" name="qty" value="1" min="1" max="{{ product.inventory }}"
-                                           class="input-qty" data-inventory="{{ product.inventory }}">
-                                    <button class="qty-btn-plus btn-qty" type="button">+</button>
-                                </div>
-                                <a class="default__button" href="#"><i class="fas fa-shopping-cart"></i> افزودن به سبد
-                                    خرید</a>
-                            {% else %}
-                                <a class="default__button" href="#"><i class="fas fa-shopping-cart"></i> عدم موجودی</a>
-                            {% endif %}
-                        </div>
+                                {% if product.inventory %}
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-qty" type="button">-</button>
+                                        <input type="number" name="qty" value="1" min="1" max="{{ product.inventory }}"
+                                               class="input-qty" data-inventory="{{ product.inventory }}">
+                                        <button class="qty-btn-plus btn-qty" type="button">+</button>
+                                    </div>
+                                    <a class="default__button" href="#"><i class="fas fa-shopping-cart"></i> افزودن به
+                                        سبد
+                                        خرید</a>
+                                {% else %}
+                                    <a class="default__button" href="#"><i class="fas fa-shopping-cart"></i> عدم موجودی</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
 
                         <div class="single__product__bottom__menu">
@@ -228,13 +232,13 @@
                     <div class="tab-content tab__content__wrapper" id="myTabContent1">
                         <div class="tab-pane fade active show" id="specs" role="tabpanel"
                              aria-labelledby="specs">
-                             <table>
+                            <table>
                                 {% for specs in product.specification_values.all %}
-                                       <tr>
-                                            <td >{{ specs }}</td>
-                                           <td style="padding-right:50px ">{{ specs.value }}</td>
-                                       </tr>
-                                 {% endfor %}
+                                    <tr>
+                                        <td>{{ specs }}</td>
+                                        <td style="padding-right:50px ">{{ specs.value }}</td>
+                                    </tr>
+                                {% endfor %}
                             </table>
                         </div>
                         <div class="tab-pane fade " id="description" role="tabpanel"
