@@ -84,6 +84,15 @@ class Product(models.Model):
         verbose_name_plural = "محصولات"
         ordering = ['-id']
 
+class ProductProxy(Product):
+    class Meta:
+        proxy = True
+        verbose_name = "جدول خصوصیات محصول"
+        verbose_name_plural = "جدول خصوصیات محصول"
+
+    def get_absolute_url(self):
+        return reverse('product-detail-view', kwargs={'slug': self.slug})
+
 class Gallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name="محصول")
     image = models.ImageField(verbose_name="عکس", null=True, blank=True, upload_to="images/")

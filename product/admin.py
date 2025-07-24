@@ -26,6 +26,22 @@ class ProductAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
     ordering = ('title',)
     inlines = [InlineGallery,]
 
+
+class ProductSpecificationValueInline(admin.TabularInline):
+    model = ProductSpecificationValue
+    extra = 1
+    fields = ('specification', 'value')
+    autocomplete_fields = ('specification',)
+
+
+class ProductAltAdmin(admin.ModelAdmin):
+    model = ProductProxy
+    list_display = ('title', 'category',)
+    list_filter = ('category',)
+    search_fields = ('title',)
+    ordering = ('title',)
+    inlines = [ProductSpecificationValueInline,]
+
 class CategoryAdmin(admin.ModelAdmin):
     model = Category
     prepopulated_fields = {"slug": ("title",)}
@@ -50,11 +66,6 @@ class CategoryAdmin(admin.ModelAdmin):
     get_food_title.short_description = 'عنوان '
 
 
-# class OffersAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
-#     model = Offers
-#     list_display = ( 'start_date', 'end_date')
-#     search_fields = ('title',)
-#     ordering = ('start_date',)
 
 class BannerAdmin(admin.ModelAdmin):
     model = Banner
@@ -154,6 +165,7 @@ custom_admin_site.register(PriceInquiryRequest,PriceInquiryRequestAdmin)
 custom_admin_site.register(Specification,SpecificationAdmin)
 custom_admin_site.register(ProductSpecificationValue,ProductSpecificationValueAdmin)
 custom_admin_site.register(ProductVisit,ProductVisitAdmin)
+custom_admin_site.register(ProductProxy,ProductAdmin)
 
 
 
