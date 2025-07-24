@@ -112,6 +112,8 @@
                                     </li>
                                 </ul>
                             </div>
+
+
                         {% endif %}
 
                         <hr>
@@ -132,6 +134,14 @@
                                 {% else %}
                                     <a class="default__button" href="#"><i class="fas fa-shopping-cart"></i> عدم موجودی</a>
                                 {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="single__product__quantity">
+                                <form action="{% url 'price-inquiry-view' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                    <button type="submit" class="default__button">استعلام قیمت</button>
+                                </form>
                             </div>
                         {% endif %}
 
