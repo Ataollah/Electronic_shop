@@ -84,14 +84,14 @@
                         <hr>
                         <div class="single__product__description">
                             <table>
-                                {% for specs in product.specification_values.all %}
-                                    {% if specs.specification.type == 'master' %}
+                                {% for specs in master_specifications %}
+
                                         <tr>
                                             <td>{{ specs }}</td>
 
                                             <td style="padding-right:50px ">{{ specs.value }}</td>
                                         </tr>
-                                    {% endif %}
+
                                 {% endfor %}
 
                             </table>
@@ -243,7 +243,7 @@
                         <div class="tab-pane fade active show" id="specs" role="tabpanel"
                              aria-labelledby="specs">
                             <table>
-                                {% for specs in product.specification_values.all %}
+                                {% for specs in all_specifications %}
                                     <tr>
                                         <td>{{ specs }}</td>
                                         <td style="padding-right:50px ">{{ specs.value }}</td>
