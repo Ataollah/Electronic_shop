@@ -27,27 +27,27 @@ class ProductAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
     inlines = [InlineGallery,]
 
 
-class ProductSpecificationValueInline(admin.TabularInline):
-    model = ProductSpecificationValue
-    extra = 1
-    fields = ('specification', 'value')
-    autocomplete_fields = ('specification',)
+# class ProductSpecificationValueInline(admin.TabularInline):
+#     model = ProductSpecificationValue
+#     extra = 1
+#     fields = ('specification', 'value')
+#     autocomplete_fields = ('specification',)
 
 
-class ProductAltAdmin(admin.ModelAdmin):
-    model = ProductProxy
-    list_display = ('title', 'category',)
-    list_filter = ('category',)
-    fields = ('title',)
-    search_fields = ('title',)
-    ordering = ('title',)
-    inlines = [ProductSpecificationValueInline,]
+# class ProductAltAdmin(admin.ModelAdmin):
+#     model = ProductProxy
+#     list_display = ('title', 'category',)
+#     list_filter = ('category',)
+#     fields = ('title',)
+#     search_fields = ('title',)
+#     ordering = ('title',)
+    # inlines = [ProductSpecificationValueInline,]
 
 
-class SpecificationInline(admin.TabularInline):
-    model = Specification
-    extra = 1
-    fields = ('name', 'type','order',)
+# class SpecificationInline(admin.TabularInline):
+#     model = Specification
+#     extra = 1
+#     fields = ('name', 'type','order',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -57,7 +57,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('title',)
     search_fields = ('title',)
     ordering = ('title',)
-    inlines = [SpecificationInline,]
+    # inlines = [SpecificationInline,]
 
 
 
@@ -132,21 +132,21 @@ class PriceInquiryRequestAdmin(admin.ModelAdmin):
     search_fields = ('product__title', 'user__email')
     ordering = ('-created_at',)
     list_filter = ('created_at',)
-
-class SpecificationAdmin(admin.ModelAdmin):
-    model = Specification
-    list_display = ('category__title', 'name')
-    search_fields = ('category__title', 'name')
-    ordering = ('-id',)
-    list_filter = ('category',)
-
-
-class ProductSpecificationValueAdmin(admin.ModelAdmin):
-    model = ProductSpecificationValue
-    list_display = ('product', 'specification', 'value')
-    search_fields = ('product__title', 'specification__name', 'value')
-    ordering = ('-id',)
-    list_filter = ('product', 'specification')
+#
+# class SpecificationAdmin(admin.ModelAdmin):
+#     model = Specification
+#     list_display = ('category__title', 'name')
+#     search_fields = ('category__title', 'name')
+#     ordering = ('-id',)
+#     list_filter = ('category',)
+#
+#
+# class ProductSpecificationValueAdmin(admin.ModelAdmin):
+#     model = ProductSpecificationValue
+#     list_display = ('product', 'specification', 'value')
+#     search_fields = ('product__title', 'specification__name', 'value')
+#     ordering = ('-id',)
+#     list_filter = ('product', 'specification')
 
 class ProductVisitAdmin(admin.ModelAdmin):
     model = ProductVisit
@@ -171,10 +171,10 @@ custom_admin_site.register(CountDownBanner,CountDownBannerAdmin)
 custom_admin_site.register(Brands,BrandsAdmin)
 custom_admin_site.register(SpecialList,SpecialListAdmin)
 custom_admin_site.register(PriceInquiryRequest,PriceInquiryRequestAdmin)
-custom_admin_site.register(Specification,SpecificationAdmin)
-custom_admin_site.register(ProductSpecificationValue,ProductSpecificationValueAdmin)
+# custom_admin_site.register(Specification,SpecificationAdmin)
+# custom_admin_site.register(ProductSpecificationValue,ProductSpecificationValueAdmin)
 custom_admin_site.register(ProductVisit,ProductVisitAdmin)
-custom_admin_site.register(ProductProxy,ProductAltAdmin)
+# custom_admin_site.register(ProductProxy,ProductAltAdmin)
 
 
 

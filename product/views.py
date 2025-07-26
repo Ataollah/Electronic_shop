@@ -72,8 +72,8 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['master_specifications'] = self.object.specifications.filter(is_master=True).order_by('order')
-        context['all_specifications'] = self.object.specifications.filter(is_master=False).order_by('order')
+        # context['master_specifications'] = self.object.specification_values.filter(is_master=True).order_by('order')
+        # context['all_specifications'] = self.object.specification_values.filter(is_master=False).order_by('order')
         context['related_products'] = Product.objects.filter(category=self.object.category).exclude(
             id=self.object.id).order_by('?')[:4]
         context['siteInfo'] = getSiteInfo()

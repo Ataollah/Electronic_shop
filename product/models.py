@@ -48,6 +48,7 @@ class Product(models.Model):
     old_price = models.BigIntegerField(verbose_name="قیمت قبلی", default=0)
     inventory = models.IntegerField(verbose_name="موجودی", default=0)
     short_description = RichTextUploadingField(verbose_name='توضیحات کوتاه', null=True, blank=True)
+    specs = RichTextUploadingField(verbose_name='خصوصیات ', null=True, blank=True)
     description = RichTextUploadingField(verbose_name='توضیحات ', null=True, blank=True)
     primary_image = models.ImageField(verbose_name="عکس اصلی", null=True, blank=True, upload_to="images/")
     secondary_image = models.ImageField(verbose_name="عکس اصلی", null=True, blank=True, upload_to="images/")
@@ -68,10 +69,10 @@ class Product(models.Model):
         update_file_field(Product, self.id, 'secondary_image', self.secondary_image)
         is_new = self.pk is None
         super().save(*args, **kwargs)
-        if self.category:
-            specifications = Specification.objects.filter(category=self.category)
-            for spec in specifications:
-                ProductSpecificationValue.objects.get_or_create(product=self, specification=spec, defaults={'value': ''})
+        # if self.category:
+        #     specifications = Specification.objects.filter(category=self.category)
+        #     for spec in specifications:
+        #         ProductSpecificationValue.objects.get_or_create(product=self, specification=spec,order=spec.order, defaults={'value': ''})
 
 
     def delete(self, *args, **kwargs):
@@ -346,33 +347,35 @@ class ProductVisit(models.Model):
 
 
 # models.py
-
-class Specification(models.Model):
-    SPEC_TYPE = [
-        ('master', 'اصلی'),
-        ('detail', 'جزییات'),
-    ]
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='specifications',verbose_name='نوع محصول')
-    name = models.CharField(max_length=100, verbose_name="نام خصوصیت")
-    type = models.CharField(max_length=10, choices=SPEC_TYPE, default='master', verbose_name='نوع خصوصیت')
-    order = models.IntegerField(default=0, verbose_name='ترتیب نمایش')
-
-    def __str__(self):
-        return f"{self.category.title} - {self.name}"
-
-    class Meta:
-        verbose_name = "خصوصیت"
-        verbose_name_plural = "خصوصیات"
-        ordering = ['category__title', 'name']
-
-class ProductSpecificationValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specification_values',verbose_name='محصول')
-    specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name='values',verbose_name='خصوصیت')
-    value = models.CharField(max_length=255, verbose_name="مقدار")
-
-    def __str__(self):
-        return f" {self.specification.name}"
-
-    class Meta:
-        verbose_name = " خصوصیت محصول"
-        verbose_name_plural = " خصوصیات محصولات"
+#
+# class Specification(models.Model):
+#     SPEC_TYPE = [
+#         ('master', 'اصلی'),
+#         ('detail', 'جزییات'),
+#     ]
+#     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='specifications',verbose_name='نوع محصول')
+#     name = models.CharField(max_length=100, verbose_name="نام خصوصیت")
+#     type = models.CharField(max_length=10, choices=SPEC_TYPE, default='master', verbose_name='نوع خصوصیت')
+#     order = models.IntegerField(default=0, verbose_name='ترتیب نمایش')
+#
+#     def __str__(self):
+#         return f"{self.category.title} - {self.name}"
+#
+#     class Meta:
+#         verbose_name = "خصوصیت"
+#         verbose_name_plural = "خصوصیات"
+#         ordering = ['category__title', 'name']
+#
+# class ProductSpecificationValue(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specification_values',verbose_name='محصول')
+#     specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name='values',verbose_name='خصوصیت')
+#     value = models.CharField(max_length=255, verbose_name="مقدار")
+#     order = models.IntegerField(default=0, verbose_name='ترتیب نمایش')
+#
+#
+#     def __str__(self):
+#         return f" {self.specification.name}"
+#
+#     class Meta:
+#         verbose_name = " خصوصیت محصول"
+#         verbose_name_plural = " خصوصیات محصولات"
